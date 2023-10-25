@@ -1,0 +1,62 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="Resources\ar-EG.json" />
+    <Content Remove="Resources\en-US.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Resources\ar-EG.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\en-US.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\dashboard\blue-oceans\eps\logo-black.eps" />
+    <None Include="wwwroot\dashboard\blue-oceans\eps\logo-color.eps" />
+    <None Include="wwwroot\dashboard\blue-oceans\eps\logo-no-background - Copy.eps" />
+    <None Include="wwwroot\dashboard\blue-oceans\eps\logo-no-background.eps" />
+    <None Include="wwwroot\dashboard\blue-oceans\eps\logo-white.eps" />
+    <None Include="wwwroot\dashboard\blue-oceans\pdf\logo-black.pdf" />
+    <None Include="wwwroot\dashboard\blue-oceans\pdf\logo-color.pdf" />
+    <None Include="wwwroot\dashboard\blue-oceans\pdf\logo-no-background.pdf" />
+    <None Include="wwwroot\dashboard\blue-oceans\pdf\logo-white.pdf" />
+    <None Include="wwwroot\dashboard\blue-oceans\svg\logo-black.svg" />
+    <None Include="wwwroot\dashboard\blue-oceans\svg\logo-color.svg" />
+    <None Include="wwwroot\dashboard\blue-oceans\svg\logo-no-background.svg" />
+    <None Include="wwwroot\dashboard\blue-oceans\svg\logo-white.svg" />
+    <None Include="wwwroot\utility-js-library\razor-utilities.js" />
+  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="FormHelper" Version="5.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.11">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.9" />
+		<PackageReference Include="MiniProfiler.AspNetCore.Mvc" Version="4.2.22" />
+		<PackageReference Include="MiniProfiler.EntityFrameworkCore" Version="4.2.22" />
+
+		<PackageReference Include="NToastNotify" Version="8.0.0" />
+	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Infra\Infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Infra\MSSQL.Migrator\MSSQL.Migrator.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Admin\Views\Home\Home.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Areas\Admin\Views\Home\Home.cshtml" />
+  </ItemGroup>
+
+</Project>

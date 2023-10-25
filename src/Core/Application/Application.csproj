@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Folder Include="Common\Export\" />
+		<Folder Include="Common\Helpers\" />
+		<Folder Include="Common\Tenants\" />
+		<Folder Include="Mapping\" />
+		<Folder Include="Requests\Roles\Commands\" />
+		<Folder Include="Requests\Transactions\" />
+		<Folder Include="Requests\Trails\Events\" />
+		<Folder Include="Requests\Trails\Queries\" />
+		<Folder Include="Requests\UsersManagement\Commands\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+		<PackageReference Include="Forbid.Extensions.Microsoft.DependencyInjection" Version="1.0.0" />
+		<PackageReference Include="Mapster" Version="7.3.0" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+		<ProjectReference Include="..\Domain\Domain.csproj" />
+	</ItemGroup>
+
+</Project>

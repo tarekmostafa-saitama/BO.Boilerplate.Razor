@@ -1,0 +1,197 @@
+﻿@using System.Globalization
+@model Application.Requests.Users.Models.LoginUserRequest
+@{
+    Layout = null;
+    var isRTL = CultureInfo.CurrentCulture.Name.StartsWith("ar");
+}
+
+<!doctype html>
+<html lang="en" data-layout="vertical" data-topbar="light" dir="@(isRTL ? "rtl" : "ltr")" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-bs-theme="dark" data-body-image="img-1" data-preloader="disable">
+
+<head>
+
+    <meta charset="utf-8"/>
+    <title>@Html.Raw(ViewBag.Title)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="/dashboard/assets/images/favicon.ico">
+
+    <!-- Layout config Js -->
+    <script src="/dashboard/assets/js/layout.js"></script>
+    @if (isRTL)
+    {
+        <!-- Bootstrap Css -->
+        <link href="~/dashboard/assets/css/bootstrap-rtl.min.css" rel="stylesheet" type="text/css" asp-append-version="true"/>
+        <!-- Icons Css -->
+        <link href="~/dashboard/assets/css/icons.min.css" rel="stylesheet" type="text/css" asp-append-version="true"/>
+        <!-- App Css-->
+        <link href="~/dashboard/assets/css/app-rtl.min.css" rel="stylesheet" type="text/css" asp-append-version="true"/>
+        <!-- custom Css-->
+        <link href="~/dashboard/assets/css/custom-rtl.min.css" rel="stylesheet" type="text/css" asp-append-version="true"/>
+    }
+    else
+    {
+        <!-- Bootstrap Css -->
+        <link href="~/dashboard/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" asp-append-version="true"/>
+        <!-- Icons Css -->
+        <link href="~/dashboard/assets/css/icons.min.css" rel="stylesheet" type="text/css" asp-append-version="true"/>
+        <!-- App Css-->
+        <link href="~/dashboard/assets/css/app.min.css" rel="stylesheet" type="text/css" asp-append-version="true"/>
+        <!-- custom Css-->
+        <link href="~/dashboard/assets/css/custom.min.css" rel="stylesheet" type="text/css" asp-append-version="true"/>
+    }
+    <link rel="stylesheet" href="/formhelper/formhelper.min.css"/>
+
+</head>
+
+<body>
+
+<!-- auth-page wrapper -->
+<div class="auth-page-wrapper auth-bg-cover py-5 d-flex justify-content-center align-items-center min-vh-100">
+    <div class="bg-overlay"></div>
+    <!-- auth-page content -->
+    <div class="auth-page-content overflow-hidden pt-lg-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card overflow-hidden card-bg-fill border-0 card-border-effect-none">
+                        <div class="row g-0">
+                            <div class="col-lg-6">
+                                <div class="p-lg-5 p-4 auth-one-bg h-100">
+                                    <div class="bg-overlay"></div>
+                                    <div class="position-relative h-100 d-flex flex-column">
+                                        <div class="mb-4">
+                                            <a asp-controller="Home" asp-action="Home" asp-area="Admin" class="d-block">
+                                                <img src="" alt="" height="18">
+                                            </a>
+                                        </div>
+                                        <div class="mt-auto">
+                                            <div class="mb-3">
+                                                <i class="ri-double-quotes-l display-4 text-success"></i>
+                                            </div>
+
+                                            <div id="qoutescarouselIndicators" class="carousel slide" data-bs-ride="carousel">
+                                                <div class="carousel-indicators">
+                                                    <button type="button" data-bs-target="#qoutescarouselIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                                    <button type="button" data-bs-target="#qoutescarouselIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                                    <button type="button" data-bs-target="#qoutescarouselIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                                </div>
+                                                <div class="carousel-inner text-center text-white pb-5">
+                                                    <div class="carousel-item active">
+                                                        <p class="fs-15 fst-italic">" Plans are worthless, but planning is essential. "</p>
+                                                    </div>
+                                                    <div class="carousel-item">
+                                                        <p class="fs-15 fst-italic">" The key is not to prioritize what's on your schedule, but to schedule your priorities."</p>
+                                                    </div>
+                                                    <div class="carousel-item">
+                                                        <p class="fs-15 fst-italic">" Communication is the most important skill in the world, and I don't care what your job title is. "</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- end carousel -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end col -->
+
+                            <div class="col-lg-6">
+                                <div class="p-lg-5 p-4">
+                                    <div>
+                                        <h5 class="text-primary">
+                                            @ViewLocalizer["loginPage_welcomeBack"]
+                                        </h5>
+                                        <p class="text-muted">@ViewLocalizer["loginPage_signInMessage"]</p>
+                                    </div>
+
+                                    <div class="mt-4">
+                                        <form asp-dataType="FormData" asp-formhelper="true" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Context.Request.Query["returnUrl"]" method="post">
+
+                                            <div class="mb-3">
+                                                <label asp-for="Email" class="form-label"></label>
+                                                <input asp-for="Email" class="form-control">
+                                                <span class="text-danger" asp-validation-for="Email"></span>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                @*   <div class="float-end">
+                                                    <a href="auth-pass-reset-basic.html" class="text-muted">Forgot password?</a>
+                                                    </div>*@
+                                                <label class="form-label" asp-for="Password"></label>
+                                                <div class="position-relative auth-pass-inputgroup mb-3">
+                                                    <input type="password" class="form-control pe-5 password-input" asp-for="Password">
+                                                    <span class="text-danger" asp-validation-for="Password"></span>
+
+                                                    <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon" type="button" id="password-addon">
+                                                        <i class="ri-eye-fill align-middle"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div class="mt-4">
+                                                <button class="btn btn-success w-100" type="submit">@ViewLocalizer["loginPage_signIn"]</button>
+                                            </div>
+
+
+                                        </form>
+
+                                        <div asp-validation-summary="ModelOnly" class="text-danger mt-2">
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <!-- end col -->
+                        </div>
+                        <!-- end row -->
+                    </div>
+                    <!-- end card -->
+                </div>
+                <!-- end col -->
+
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container -->
+    </div>
+    <!-- end auth page content -->
+    <!-- footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="text-center">
+                        <p class="mb-0">
+                            <script>document.write(new Date().getFullYear())</script> © Crafted by Blue Oceans
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- end Footer -->
+</div>
+<!-- end auth-page-wrapper -->
+
+@await Component.InvokeAsync("NToastNotify")
+<mini-profiler position="@RenderPosition.BottomRight" max-traces="5" color-scheme="ColorScheme.Auto" nonce="45" decimal-places="2"/>
+
+<!-- JAVASCRIPT -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="~/dashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+<partial name="_ValidationPartial"/>
+<script src="/dashboard/assets/libs/simplebar/simplebar.min.js"></script>
+<script src="/dashboard/assets/libs/node-waves/waves.min.js"></script>
+<script src="/dashboard/assets/libs/feather-icons/feather.min.js"></script>
+<script src="/dashboard/assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
+<script src="/dashboard/assets/js/plugins.js"></script>
+<script src="/formhelper/formhelper.bundle.min.js"></script>
+
+<!-- password-addon init -->
+<script src="/dashboard/assets/js/pages/password-addon.init.js"></script>
+</body>
+
+</html>

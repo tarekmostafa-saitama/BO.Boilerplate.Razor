@@ -1,0 +1,19 @@
+{
+  "TenantSettings": {
+    "Defaults": {
+      "DbProvider": "mssql",
+      "ConnectionString":
+        "Server=.;Database=BoBoilerplateRazorDb;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=true"
+    },
+    "Tenants": [
+      {
+        "Name": "Default Tenant",
+        "TenantId": "Default",
+        // Leave it empty + DbProvider string if you wish to use default DB
+        "ConnectionString": "",
+        // Leave it empty + connection string if you wish to use default DB
+        "DbProvider": ""
+      }
+    ]
+  }
+}

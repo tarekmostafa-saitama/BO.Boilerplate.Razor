@@ -1,0 +1,46 @@
+{
+  // Global
+  "requiredField": "This Field is required",
+  "edit": "Edit",
+  "name": "Name",
+  "operation": "Operations",
+  "delete": "Delete",
+  "back": "Back to",
+  "save": "Save",
+  "savedSuccess": "Data Saved Successfully",
+  "deleteSuccessfully": "Item Deleted Successfully",
+
+  // Login Page
+  "loginPage_email": "Email Address",
+  "loginPage_password": "Password",
+  "loginPage_rememberMe": "Remember Me?",
+  "loginPage_welcomeBack": "Welcome Back !",
+  "loginPage_signInMessage": "Sign in to continue to your account.",
+  "loginPage_signIn": "Sign In",
+  "loginPage_successLogin": "Logged In Successfully",
+
+
+  //layoutPage
+  "layout_authentication": "Security settings",
+  "layout_home": "Home",
+  "layout_usersList": "Users List",
+  "layout_rolesList": "Roles List",
+  "layout_transactionsLog": "Transactions Log",
+  "layout_logout": "Logout",
+
+  //RolesPage
+  "roles_list": "Roles List",
+  "roles_create": "Create Role",
+  "roles_roleName": "Role Name",
+  "roles_update": "Update Role",
+
+
+  //UserssPage
+  "users_list": "Users List",
+  "users_create": "Create User",
+  "users_roleName": "User Name",
+  "users_update": "Update User",
+  "users_fullName": "FullName",
+  "users_email": "Email",
+  "users_userName": "UserName",
+}

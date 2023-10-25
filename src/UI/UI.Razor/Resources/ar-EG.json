@@ -1,0 +1,48 @@
+{
+  // Global
+  "requiredField": "هذا الحقل مطلوب",
+  "edit": "تعديل",
+  "name": "الإسم",
+  "operations": "العمليات",
+  "delete": "حذف",
+  "back": "الرجوع إلى",
+  "save": "حفظ",
+  "savedSuccess": "تم الحفظ بنجاح",
+  "deleteSuccessfully": "تم الحذف بنجاح",
+
+
+  // Login Page
+  "loginPage_email": "البريد الإلكتروني",
+  "loginPage_password": "الرقم السري",
+  "loginPage_rememberMe": "تذكرني؟",
+  "loginPage_signIn": "تسجيل دخول",
+  "loginPage_welcomeBack": "مرحبا بعودتك !",
+  "loginPage_signInMessage": "تسجيل الدخول الي حسابك ",
+  "loginPage_successLogin": "تم تسجيل الدخول بنجاح",
+
+  //layoutPage
+  "layout_authentication": "إعدادات الأمان",
+  "layout_home": "الرئيسية",
+  "layout_usersList": "قائمة المستخدمين",
+  "layout_rolesList": "قائمة أدوار المستخدمين",
+  "layout_transactionsLog": "قائمة عمليات المستخدمين",
+  "layout_logout": "تسجيل الخروج",
+
+  //RolesPage
+  "roles_list": "قائمة أدوار المستخدمين",
+  "roles_create": "إنشاء دور مستخدم",
+  "roles_roleName": "إسم الدور",
+  "roles_update": "تعديل دور مستخدم",
+
+
+  //UsersPage
+  "users_list": "قائمة المستخدمين",
+  "users_create": "إنشاء مستخدم",
+  "users_roleName": "إسم المستخدم",
+  "users_update": "تعديل بيانات مستخدم",
+  "users_fullName": "الإسم",
+  "users_email": "الإيميل",
+  "users_userName": "إسم المستجدم"
+
+
+}
