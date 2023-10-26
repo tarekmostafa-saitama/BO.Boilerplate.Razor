@@ -24,19 +24,12 @@ internal class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, PaginateRes
         _identityService = identityService;
     }
 
-    //TODO: Need to be handled to support ordering and real pagination
     public async Task<PaginateResponseModel<UserVm>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
     {
-        var pageSize = request.PaginateModel.Request.Length != null
-            ? Convert.ToInt32(request.PaginateModel.Request.Length)
-            : 0;
-        var skip = request.PaginateModel.Request.Start != null
-            ? Convert.ToInt32(request.PaginateModel.Request.Start)
-            : 0;
-        var recordsTotal = 0;
-        var usersData = await _identityService.GetUsersAsync(new PaginateModel<string>());
+      
+       
+        var usersData = await _identityService.GetUsersAsync(request.PaginateModel);
 
-
-        throw new NotImplementedException();
+        return usersData;
     }
 }
