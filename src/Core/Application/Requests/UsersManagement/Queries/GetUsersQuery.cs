@@ -17,18 +17,18 @@ public class GetUsersQuery : IRequest<PaginateResponseModel<UserVm>>
 
 internal class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, PaginateResponseModel<UserVm>>
 {
-    private readonly IUserService _identityService;
+    private readonly IUserService _userService;
 
-    public GetUsersQueryHandler(IUserService identityService)
+    public GetUsersQueryHandler(IUserService userService)
     {
-        _identityService = identityService;
+        _userService = userService;
     }
 
     public async Task<PaginateResponseModel<UserVm>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
     {
       
        
-        var usersData = await _identityService.GetUsersAsync(request.PaginateModel);
+        var usersData = await _userService.GetUsersAsync(request.PaginateModel);
 
         return usersData;
     }
