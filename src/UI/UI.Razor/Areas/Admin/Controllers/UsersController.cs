@@ -45,17 +45,21 @@ public class UsersController : Controller
         return Ok(model);
     }
 
+    [HttpGet("Dashboard/Users/Create")]
 
     public IActionResult Create()
     {
         return View();
     }
 
+    [HttpGet("Dashboard/Users/{userId}/Update")]
     public IActionResult Update()
     {
         return View();
     }
 
+
+    [HttpGet("Dashboard/Users/{userId}/Delete")]
     public IActionResult Delete()
     {
         return View();

@@ -44,6 +44,7 @@
                         <th>@ViewLocalizer["users_fullName"]</th>
                         <th>@ViewLocalizer["users_userName"]</th>
                         <th>@ViewLocalizer["users_email"]</th>
+                        <th>@ViewLocalizer["operations"]</th>
 
                     </tr>
                     </thead>
@@ -108,7 +109,33 @@
                 "columns": [
                     { "data": "fullName", "name": "FullName", "autoWidth": true },
                     { "data": "userName", "name": "UserName", "autoWidth": true },
-                    { "data": "email", "name": "Email", "autoWidth": true }
+                    { "data": "email", "name": "Email", "autoWidth": true },
+                    {
+                        "orderable": false,
+                        "render": function (data, type, row, meta) {
+                            return `
+                              @if (hasUpdateClaim)
+                              {
+                                  <text>
+
+                                             <span><a href="/Dashboard/Users/${row.id}/Create" class="btn btn-sm btn-soft-info"> @ViewLocalizer["edit"] </a></span>
+
+                                 </text>
+                              }
+                            @if (hasDeleteClaim)
+                            {
+                                <text>
+                                  <form class="d-inline formDeleteConfirmation" href="/Dashboard/Users/${row.id}/Delete" method="post">
+                                        <button
+                                            class="btn btn-sm btn-soft-danger" type="submit" id="role_${row.Id}">
+                                            @ViewLocalizer["delete"]
+                                        </button>
+                                    </form>
+                                </text>
+                            }
+                                `
+                        }
+                    },
                 ],
                 "fnDrawCallback": function(oSettings, json) {
                     // $('#countSpan').text(table.page.info().recordsTotal);
