@@ -303,9 +303,11 @@ function ChangeIframesSize(selector, width, height) {
 }
 
 
-document.querySelectorAll(".formDeleteConfirmation").forEach(form => {
-    form.addEventListener("submit",
+
+    $(document).on("submit", "form",
         (event) => {
+            if (!event.currentTarget.classList.contains("formDeleteConfirmation"))
+                event.currentTarget.submit();
             event.preventDefault();
             swal.fire({
                 title: getValue("deleteTitle"),
@@ -318,8 +320,7 @@ document.querySelectorAll(".formDeleteConfirmation").forEach(form => {
                 cancelButtonText: getValue("deleteNo")
             }).then(function(choice) {
                 if (choice.value) {
-                    e.currentTarget.submit();
+                    event.currentTarget.submit();
                 }
             });
         });
-});

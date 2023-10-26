@@ -38,7 +38,7 @@
                 <h5 class="card-title mb-0"> @ViewData["Title"] </h5>
             </div>
             <div class="card-body">
-                <table id="example" class="table table-bordered table-responsive nowrap table-striped align-middle" style="width:100%">
+                <table id="server-side-dt" class="server-side-dt table table-bordered table-responsive nowrap table-striped align-middle" style="width:100%">
                     <thead>
                     <tr>
                         <th>@ViewLocalizer["users_fullName"]</th>
@@ -64,7 +64,7 @@
         $(document).ready(function() {
 
             $.fn.dataTable.ext.errMode = 'none';
-            window.dataTable = $("#example").DataTable({
+            window.dataTable = $("#server-side-dt").DataTable({
                 "order": [],
                 "dom":
                     "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
@@ -125,9 +125,9 @@
                             @if (hasDeleteClaim)
                             {
                                 <text>
-                                  <form class="d-inline formDeleteConfirmation" href="/Dashboard/Users/${row.id}/Delete" method="post">
+                                  <form class="d-inline formDeleteConfirmation" action="/Dashboard/Users/${row.id}/Delete" method="post">
                                         <button
-                                            class="btn btn-sm btn-soft-danger" type="submit" id="role_${row.Id}">
+                                            class="btn btn-sm btn-soft-danger" type="submit" id="role_${row.id}">
                                             @ViewLocalizer["delete"]
                                         </button>
                                     </form>

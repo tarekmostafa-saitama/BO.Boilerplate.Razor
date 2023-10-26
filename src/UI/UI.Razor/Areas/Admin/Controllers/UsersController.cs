@@ -104,9 +104,12 @@ public class UsersController : Controller
     }
 
 
-    [HttpGet("Dashboard/Users/{userId}/Delete")]
-    public IActionResult Delete()
+    [HttpPost("Dashboard/Users/{userId}/Delete")]
+    [MustHavePermission(Actions.Delete, Resources.Users)]   
+    public async Task<IActionResult> Delete(string userId)
     {
-        return View();
+        await _sender.Send(new DeleteUserCommand(userId));
+        _toastNotification.AddSuccessToastMessage(_stringLocalizer["deleteSuccessfully"]);
+        return RedirectToAction(nameof(List));
     }
 }

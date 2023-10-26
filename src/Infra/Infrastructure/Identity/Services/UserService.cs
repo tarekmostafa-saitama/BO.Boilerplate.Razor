@@ -100,8 +100,9 @@ public class UserService : IUserService
     public async Task DeleteUserAsync(string userId)
     {
         var user = await _userManager.FindByIdAsync(userId);
-        if (user != null) await _userManager.DeleteAsync(user);
-        throw new NotFoundException("user not found with id= " + userId);
+        if (user == null) 
+         throw new NotFoundException("user not found with id= " + userId);
+        await _userManager.DeleteAsync(user);
     }
 
     public async Task ReplaceRolesToUserAsync(string userId, List<string> roles)

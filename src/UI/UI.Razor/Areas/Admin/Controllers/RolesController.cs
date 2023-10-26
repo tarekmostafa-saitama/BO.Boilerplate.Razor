@@ -55,7 +55,7 @@ public class RolesController : Controller
         return FormResult.CreateErrorResult(result.Errors.First());
     }
 
-    [HttpGet("Dashboard/Roles/{roleId}/Edit")]
+    [HttpGet("Dashboard/Roles/{roleId}/Update")]
     [MustHavePermission(Actions.Update, Resources.Roles)]
     public async Task<IActionResult> Update(string roleId)
     {
@@ -68,7 +68,7 @@ public class RolesController : Controller
         return View(result);
     }
 
-    [HttpPost("Dashboard/Roles/{roleId}/Edit")]
+    [HttpPost("Dashboard/Roles/{roleId}/Update")]
     [MustHavePermission(Actions.Update, Resources.Roles)]
     [FormValidator]
     public async Task<IActionResult> Update(string roleId, RoleVm roleVm)

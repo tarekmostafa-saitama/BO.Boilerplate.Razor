@@ -40,7 +40,7 @@
                 <h5 class="card-title mb-0"> @ViewLocalizer["roles_list"]</h5>
             </div>
             <div class="card-body">
-                <table id="example" class="table table-bordered table-responsive nowrap table-striped align-middle" style="width:100%">
+                <table id="client-side-dt" class="client-side-dt table table-bordered table-responsive nowrap table-striped align-middle" style="width:100%">
                     <thead>
                     <tr>
                         <th>@ViewLocalizer["name"]</th>
@@ -90,7 +90,7 @@
     <script>
         $(document).ready(function() {
             $.fn.dataTable.ext.errMode = 'none';
-            window.dataTable = $("#example").DataTable({
+            window.dataTable = $("#client-side-dt").DataTable({
                 "dom":
                     "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
                         "<'table-responsive'tr>" +
