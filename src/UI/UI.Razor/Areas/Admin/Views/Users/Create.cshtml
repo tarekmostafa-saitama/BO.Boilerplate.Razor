@@ -2,6 +2,9 @@
 
 @{
     ViewData["Title"] = StringLocalizer["users_create"];
+    var roles = (List<string>)ViewBag.Roles; 
+    var iterator = -1;
+
 }
 <div class="row mb-3">
     <div class="col-12">
@@ -40,19 +43,6 @@
                 </div>
                 <div class="card-body">
 
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="mb-3">
-                                <label class="form-label" asp-for="FullName">@ViewLocalizer["users_fullName"] </label><span class="text-danger font-weight-extra-bold ">*</span>
-                                <input class="form-control" asp-for="FullName">
-                                <span class="text-danger" asp-validation-for="FullName"></span>
-
-                            </div>
-                        </div>
-
-                    </div>
-
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
@@ -64,9 +54,9 @@
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" asp-for="UserName">@ViewLocalizer["users_userName"] </label><span class="text-danger font-weight-extra-bold ">*</span>
-                                <input class="form-control" asp-for="UserName">
-                                <span class="text-danger" asp-validation-for="UserName"></span>
+                                <label class="form-label" asp-for="FullName">@ViewLocalizer["users_userName"] </label><span class="text-danger font-weight-extra-bold ">*</span>
+                                <input class="form-control" asp-for="FullName">
+                                <span class="text-danger" asp-validation-for="FullName"></span>
 
                             </div>
                         </div>
@@ -90,16 +80,41 @@
                         </div>
                     </div>
 
+            
                 </div>
             </div>
         </div>
     </div>
 
-
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header align-items-center d-flex">
+                    <h4 class="card-title mb-0 flex-grow-1">@ViewLocalizer["users_Roles"]</h4>
+                </div>
+                <div class="card-body">
+                        <div class="row">
+                            @foreach (var role in roles)
+                            {
+                              
+                                iterator++;
+                                <div class="col-md-3">
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" value="@role" role="switch" asp-for="RoleVms[iterator].Name">
+                                        <label class="form-check-label" asp-for="RoleVms[iterator].Name">@role</label>
+                                    </div>
+                                </div>
+                            }
+                    </div>
+                </div>
+                </div>
+         </div>
+    </div>
     <div class="row mb-4">
         <div classs="col-md-4">
             <input type="submit" value="@ViewLocalizer["save"]" class="btn btn-primary">
 
         </div>
     </div>
+
 </form>

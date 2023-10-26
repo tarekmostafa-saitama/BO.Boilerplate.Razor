@@ -25,6 +25,10 @@ internal class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, IRe
 
     public async Task<IResponse<string>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
-        return await _userService.CreateUserAsync(request.UserVm);
+        var createUserResult=  await _userService.CreateUserAsync(request.UserVm);
+        if (createUserResult.Succeeded)
+            await _userService.ReplaceRolesToUserAsync(createUserResult.Data , request.UserVm.RoleVms.Select(x=>x.Name).ToList());
+
+        return createUserResult;
     }
 }

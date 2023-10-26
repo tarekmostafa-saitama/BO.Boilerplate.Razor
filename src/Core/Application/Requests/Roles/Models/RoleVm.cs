@@ -1,4 +1,6 @@
-﻿namespace Application.Requests.Roles.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Application.Requests.Roles.Models;
 
 public class RoleVm
 {

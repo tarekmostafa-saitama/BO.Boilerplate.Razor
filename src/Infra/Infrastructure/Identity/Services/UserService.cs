@@ -73,7 +73,16 @@ public class UserService : IUserService
 
     public async Task<IResponse<string>> CreateUserAsync(CreateUserVm userVm)
     {
-        throw new NotImplementedException();
+        var user = new ApplicationUser()
+        {
+            FullName = userVm.FullName,
+            Email = userVm.Email,
+            UserName = userVm.Email,
+        };
+        var result = await _userManager.CreateAsync(user, userVm.Password);
+        if (result.Succeeded)
+            return Response.Success(user.Id);
+        return Response.Fail<string>(result.Errors.Select(x => x.Description).ToList());
     }
 
     public async Task<IResponse<string>> UpdateUserAsync(string userId, UpdateUserVm userVm)

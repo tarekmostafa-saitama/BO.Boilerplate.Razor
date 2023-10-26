@@ -1,9 +1,11 @@
 ﻿using Application.Common.Models.UserModels;
+using Application.Requests.Roles.Queries;
 using Application.Requests.UsersManagement.Commands;
 using Application.Requests.UsersManagement.Queries;
 using FormHelper;
 using Infrastructure.Identity.PermissionHandlers;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using NToastNotify;
@@ -52,9 +54,11 @@ public class UsersController : Controller
 
     [HttpGet("Dashboard/Users/Create")]
     [MustHavePermission(Actions.Create, Resources.Users)]
-    public IActionResult Create()
+    public async Task<IActionResult> Create()
     {
-        return View(new CreateUserVm());
+        var roles = await _sender.Send(new GetRolesQuery());
+        ViewBag.Roles = roles.Select(x=>x.Name).ToList();
+        return View();
     }
 
     [HttpPost("Dashboard/Users/Create")]

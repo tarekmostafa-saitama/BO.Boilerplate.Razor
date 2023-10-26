@@ -44,5 +44,7 @@
   "users_email": "Email",
   "users_userName": "UserName",
   "users_password": "Password",
-  "users_confirmPassword": "Confirm Password"
+  "users_confirmPassword": "Confirm Password",
+  "users_Roles": "Roles"
+
 }

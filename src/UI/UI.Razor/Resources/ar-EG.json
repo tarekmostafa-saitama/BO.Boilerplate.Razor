@@ -41,10 +41,10 @@
   "users_roleName": "إسم المستخدم",
   "users_update": "تعديل بيانات مستخدم",
   "users_fullName": "الإسم",
-  "users_email": "الإيميل",
-  "users_userName": "إسم المستجدم",
+  "users_email": "البريد الإلكتروني",
+  "users_userName": "إسم المستخدم",
   "users_password": "الرقم السري",
-  "users_confirmPassword": "تأكيد الرقم السري"
-
+  "users_confirmPassword": "تأكيد الرقم السري",
+  "users_Roles": "أدوار المستخدم"
 
 }
