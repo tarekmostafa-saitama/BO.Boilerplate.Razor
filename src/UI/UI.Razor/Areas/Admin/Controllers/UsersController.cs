@@ -1,11 +1,15 @@
 ﻿using Application.Common.Models.UserModels;
+using Application.Requests.UsersManagement.Commands;
 using Application.Requests.UsersManagement.Queries;
+using FormHelper;
+using Infrastructure.Identity.PermissionHandlers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using NToastNotify;
 using Shared.Extensions;
 using Shared.Models.PaginateModels;
+using Shared.Permissions;
 
 namespace UI.Razor.Areas.Admin.Controllers;
 
@@ -47,11 +51,24 @@ public class UsersController : Controller
     }
 
     [HttpGet("Dashboard/Users/Create")]
-
+    [MustHavePermission(Actions.Create, Resources.Users)]
     public IActionResult Create()
     {
         return View(new CreateUserVm());
     }
+
+    [HttpPost("Dashboard/Users/Create")]
+    [MustHavePermission(Actions.Create, Resources.Users)]
+    [FormValidator]
+    public async Task<IActionResult> Create(CreateUserVm createUserVm)
+    {
+        var result = await _sender.Send(new CreateUserCommand(createUserVm));
+        if (result.Succeeded)
+            return FormResult.CreateSuccessResult(_stringLocalizer["savedSuccess"], Url.Action(nameof(List)));
+        return FormResult.CreateErrorResult(result.Errors.First());
+    }
+
+
 
     [HttpGet("Dashboard/Users/{userId}/Update")]
     public IActionResult Update()
