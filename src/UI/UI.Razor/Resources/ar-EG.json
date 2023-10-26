@@ -42,7 +42,9 @@
   "users_update": "تعديل بيانات مستخدم",
   "users_fullName": "الإسم",
   "users_email": "الإيميل",
-  "users_userName": "إسم المستجدم"
+  "users_userName": "إسم المستجدم",
+  "users_password": "الرقم السري",
+  "users_confirmPassword": "تأكيد الرقم السري"
 
 
 }

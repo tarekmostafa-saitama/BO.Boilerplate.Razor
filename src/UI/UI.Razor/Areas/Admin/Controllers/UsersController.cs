@@ -1,4 +1,5 @@
-﻿using Application.Requests.UsersManagement.Queries;
+﻿using Application.Common.Models.UserModels;
+using Application.Requests.UsersManagement.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
@@ -49,7 +50,7 @@ public class UsersController : Controller
 
     public IActionResult Create()
     {
-        return View();
+        return View(new CreateUserVm());
     }
 
     [HttpGet("Dashboard/Users/{userId}/Update")]
