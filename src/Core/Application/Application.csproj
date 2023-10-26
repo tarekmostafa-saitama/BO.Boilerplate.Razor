@@ -14,7 +14,6 @@
 		<Folder Include="Requests\Transactions\" />
 		<Folder Include="Requests\Trails\Events\" />
 		<Folder Include="Requests\Trails\Queries\" />
-		<Folder Include="Requests\UsersManagement\Commands\" />
 	</ItemGroup>
 
 	<ItemGroup>

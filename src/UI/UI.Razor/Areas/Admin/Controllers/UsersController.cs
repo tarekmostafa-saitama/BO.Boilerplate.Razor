@@ -1,9 +1,12 @@
 ﻿using Application.Common.Models.UserModels;
+using Application.Requests.Roles.Commands;
+using Application.Requests.Roles.Models;
 using Application.Requests.Roles.Queries;
 using Application.Requests.UsersManagement.Commands;
 using Application.Requests.UsersManagement.Queries;
 using FormHelper;
 using Infrastructure.Identity.PermissionHandlers;
+using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -75,9 +78,29 @@ public class UsersController : Controller
 
 
     [HttpGet("Dashboard/Users/{userId}/Update")]
-    public IActionResult Update()
+    [MustHavePermission(Actions.Update, Resources.Users)]
+    public async Task<IActionResult> Update(string userId)
     {
-        return View();
+        var user = await _sender.Send(new GetUserQuery(userId,true));
+        ViewBag.UserRoles = user.RoleVms.Select(x=>x.Name).ToList();
+
+        var roles = await _sender.Send(new GetRolesQuery());
+        ViewBag.Roles = roles.Select(x => x.Name).ToList();
+
+
+        user.RoleVms =   new List<RoleVm>(new RoleVm[roles.Count]);
+        return View(user.Adapt<UpdateUserVm>());
+    }
+
+    [HttpPost("Dashboard/Users/{userId}/Update")]
+    [MustHavePermission(Actions.Update, Resources.Users)]
+    [FormValidator]
+    public async Task<IActionResult> Update(string userId, UpdateUserVm userVm)
+    {
+        var result = await _sender.Send(new UpdateUserCommand(userVm));
+        if (result.Succeeded)
+            return FormResult.CreateSuccessResult(_stringLocalizer["savedSuccess"], Url.Action(nameof(List)));
+        return FormResult.CreateErrorResult(result.Errors.First());
     }
 
 

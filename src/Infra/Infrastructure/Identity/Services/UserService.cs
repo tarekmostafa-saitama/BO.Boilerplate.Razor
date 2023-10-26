@@ -85,10 +85,10 @@ public class UserService : IUserService
         return Response.Fail<string>(result.Errors.Select(x => x.Description).ToList());
     }
 
-    public async Task<IResponse<string>> UpdateUserAsync(string userId, UpdateUserVm userVm)
+    public async Task<IResponse<string>> UpdateUserAsync( UpdateUserVm userVm)
     {
-        var user = await _userManager.FindByIdAsync(userId) ??
-                   throw new NotFoundException("user not found with id= " + userId);
+        var user = await _userManager.FindByIdAsync(userVm.Id) ??
+                   throw new NotFoundException("user not found with id= " + userVm.Id);
         user.FullName = userVm.FullName;
 
         var result = await _userManager.UpdateAsync(user);

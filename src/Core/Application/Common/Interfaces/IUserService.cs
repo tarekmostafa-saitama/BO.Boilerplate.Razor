@@ -12,7 +12,7 @@ public interface IUserService : IScopedService
     Task<UserVm> GetUserByEmailAsync(string email);
 
     Task<IResponse<string>> CreateUserAsync(CreateUserVm userVm);
-    Task<IResponse<string>> UpdateUserAsync(string userId, UpdateUserVm userVm);
+    Task<IResponse<string>> UpdateUserAsync(UpdateUserVm userVm);
     Task DeleteUserAsync(string userId);
 
     Task ReplaceRolesToUserAsync(string userId, List<string> roles);
