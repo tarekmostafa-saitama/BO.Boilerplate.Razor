@@ -33,8 +33,7 @@
     </div>
 </div>
 
-<form asp-formhelper="true" asp-action="Create" asp-controller="Users"
-      method="post">
+<form asp-formhelper="true" asp-action="Create" asp-controller="Users" method="post">
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
@@ -92,21 +91,20 @@
                 <div class="card-header align-items-center d-flex">
                     <h4 class="card-title mb-0 flex-grow-1">@ViewLocalizer["users_Roles"]</h4>
                 </div>
-                <div class="card-body">
-                        <div class="row">
-                            @foreach (var role in roles)
-                            {
-                              
-                                iterator++;
-                                <div class="col-md-3">
-                                    <div class="form-check form-switch mb-3">
-                                        <input class="form-check-input" type="checkbox" value="@role" role="switch" asp-for="RoleVms[iterator].Name">
-                                        <label class="form-check-label" asp-for="RoleVms[iterator].Name">@role</label>
+                    <div class="card-body">
+                            <div class="row">
+                                @foreach (var role in roles)
+                                {
+                                    iterator++;
+                                    <div class="col-md-3">
+                                        <div class="form-check form-switch mb-3">
+                                            <input class="form-check-input" type="checkbox" value="@role" role="switch" asp-for="RoleVms[iterator].Name">
+                                            <label class="form-check-label" asp-for="RoleVms[iterator].Name">@role</label>
+                                        </div>
                                     </div>
-                                </div>
-                            }
+                                }
+                        </div>
                     </div>
-                </div>
                 </div>
          </div>
     </div>

@@ -302,25 +302,45 @@ function ChangeIframesSize(selector, width, height) {
     });
 }
 
+//document.querySelectorAll(".formDeleteConfirmation").forEach(form => {
+//    form.addEventListener("submit",
+//        (event) => {
+//            event.preventDefault();
+//            swal.fire({
+//                title: getValue("deleteTitle"),
+//                text: getValue("deleteContent"),
+//                icon: "info",
+//                showCancelButton: true,
+//                confirmButtonColor: "#3085d6",
+//                cancelButtonColor: "#d33",
+//                confirmButtonText: getValue("deleteYes"),
+//                cancelButtonText: getValue("deleteNo")
+//            }).then(function (choice) {
+//                if (choice.value) {
+//                    e.currentTarget.submit();
+//                }
+//            });
+//        });
+//});
 
 
     $(document).on("submit", "form",
         (event) => {
-            if (!event.currentTarget.classList.contains("formDeleteConfirmation"))
-                event.currentTarget.submit();
-            event.preventDefault();
-            swal.fire({
-                title: getValue("deleteTitle"),
-                text: getValue("deleteContent"),
-                icon: "info",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: getValue("deleteYes"),
-                cancelButtonText: getValue("deleteNo")
-            }).then(function(choice) {
-                if (choice.value) {
-                    event.currentTarget.submit();
-                }
-            });
+            if (event.currentTarget.classList.contains("formDeleteConfirmation")) {
+                event.preventDefault();
+                swal.fire({
+                    title: getValue("deleteTitle"),
+                    text: getValue("deleteContent"),
+                    icon: "info",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: getValue("deleteYes"),
+                    cancelButtonText: getValue("deleteNo")
+                }).then(function (choice) {
+                    if (choice.value) {
+                        event.currentTarget.submit();
+                    }
+                });
+            }
         });

@@ -10,5 +10,5 @@ public class UserVm
     public string Email { get; set; }
 
 
-    public List<RoleVm> RoleVms { get; set; }
+    public List<RoleVm> RoleVms { get; set; } 
 }
