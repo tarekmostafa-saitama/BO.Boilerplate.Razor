@@ -73,6 +73,8 @@ public class RolesController : Controller
     [FormValidator]
     public async Task<IActionResult> Update(string roleId, RoleVm roleVm)
     {
+        //TODO: To Refactor this mess later
+        roleVm.Permissions = roleVm.Permissions.Where(x => x != "false").ToList();
         var result = await _sender.Send(new UpdateRoleCommand(roleVm));
         if (result.Succeeded)
             return FormResult.CreateSuccessResult(_stringLocalizer["savedSuccess"], Url.Action(nameof(List)));

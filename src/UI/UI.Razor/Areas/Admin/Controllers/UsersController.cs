@@ -81,6 +81,7 @@ public class UsersController : Controller
     [MustHavePermission(Actions.Update, Resources.Users)]
     public async Task<IActionResult> Update(string userId)
     {
+        //TODO: To Refactor this mess later
         var user = await _sender.Send(new GetUserQuery(userId,true));
         ViewBag.UserRoles = user.RoleVms.Select(x=>x.Name).ToList();
 
@@ -97,6 +98,9 @@ public class UsersController : Controller
     [FormValidator]
     public async Task<IActionResult> Update(string userId, UpdateUserVm userVm)
     {
+        //TODO: To Refactor this mess later
+
+        userVm.RoleVms = userVm.RoleVms.Where(x => x.Name != "false").ToList();
         var result = await _sender.Send(new UpdateUserCommand(userVm));
         if (result.Succeeded)
             return FormResult.CreateSuccessResult(_stringLocalizer["savedSuccess"], Url.Action(nameof(List)));

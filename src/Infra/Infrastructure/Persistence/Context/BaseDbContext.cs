@@ -107,6 +107,7 @@ public abstract class BaseDbContext : IdentityDbContext<ApplicationUser>
         ChangeTracker.DetectChanges();
 
         var trailEntries = new List<AuditTrail>();
+        var x = ChangeTracker.Entries();
         foreach (var entry in ChangeTracker.Entries()
                      .Where(e => e.Entity.GetType().IsGenericType &&
                                  e.Entity.GetType().GetGenericTypeDefinition() == typeof(IBaseAuditableEntity))
