@@ -49,13 +49,21 @@ public abstract class BaseDbContext : IdentityDbContext<ApplicationUser>
                     entry.Entity.TenantId = _tenantService.GetTenant().TenantId;
                     break;
             }
+        ChangeTracker.DetectChanges();
 
-        var auditEntries = HandleAuditingBeforeSaveChanges(_currentUserService.Id);
+        try
+        {
+            ChangeTracker.AutoDetectChangesEnabled = false;
+            var auditEntries = HandleAuditingBeforeSaveChanges(_currentUserService.Id);
+            var result = await base.SaveChangesAsync(cancellationToken);
+            await HandleAuditingAfterSaveChangesAsync(auditEntries, cancellationToken);
+            return result;
 
-        var result = await base.SaveChangesAsync(cancellationToken);
-
-        await HandleAuditingAfterSaveChangesAsync(auditEntries, cancellationToken);
-        return result;
+        }
+        finally
+        {
+            ChangeTracker.AutoDetectChangesEnabled = true;
+        }
     }
 
 
@@ -104,7 +112,7 @@ public abstract class BaseDbContext : IdentityDbContext<ApplicationUser>
                     break;
             }
 
-        ChangeTracker.DetectChanges();
+       
 
         var trailEntries = new List<AuditTrail>();
         foreach (var entry in ChangeTracker.Entries<IBaseAuditableEntity>())
