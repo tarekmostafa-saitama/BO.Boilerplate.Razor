@@ -43,7 +43,7 @@ public class EfRepository<TEntity> : IRepository<TEntity> where TEntity : class
         return await query.ToListAsync();
     }
 
-    public async Task<IEnumerable<TEntity>> GetAsync(ISpecification<TEntity> specification, bool trackChanges = true,
+    public async Task<IEnumerable<TEntity>> GetAllAsync(ISpecification<TEntity> specification, bool trackChanges = true,
         params Expression<Func<TEntity, object>>[] includes)
     {
         IQueryable<TEntity> query = _entities;
@@ -54,8 +54,9 @@ public class EfRepository<TEntity> : IRepository<TEntity> where TEntity : class
         if (includes != null)
             query = includes.Aggregate(query, (current, include) => current.Include(include));
 
-        if (specification != null)
-            query = query.Where(specification.Criteria);
+      
+
+        query = query.ApplySpecification(specification);
 
         return await query.ToListAsync();
     }
@@ -80,5 +81,16 @@ public class EfRepository<TEntity> : IRepository<TEntity> where TEntity : class
         var query = _entities.AsQueryable();
         if (criteria != null) query = query.Where(criteria);
         query.ExecuteDelete();
+    }
+
+    public async Task<int> CountAsync(Expression<Func<TEntity, bool>> criteria = null)
+    {
+        if (criteria != null) return await _entities.CountAsync(criteria);
+        return await _entities.CountAsync();
+    }
+
+    public async Task<int> CountAsync(ISpecification<TEntity> specification)
+    {
+        return await _entities.ApplySpecification(specification).CountAsync();
     }
 }

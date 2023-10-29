@@ -16,7 +16,7 @@ public interface IRepository<TEntity> where TEntity : class
         params Expression<Func<TEntity, object>>[] includes);
 
 
-    Task<IEnumerable<TEntity>> GetAsync(
+    Task<IEnumerable<TEntity>> GetAllAsync(
         ISpecification<TEntity> specification,
         bool trackChanges = true,
         params Expression<Func<TEntity, object>>[] includes);
@@ -28,4 +28,11 @@ public interface IRepository<TEntity> where TEntity : class
 
     void RemoveRange(
         Expression<Func<TEntity, bool>> criteria);
+
+    Task<int> CountAsync(Expression<Func<TEntity, bool>> criteria = null);
+
+
+    Task<int> CountAsync(
+        ISpecification<TEntity> specification
+      );
 }

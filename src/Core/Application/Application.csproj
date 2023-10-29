@@ -13,7 +13,6 @@
 		<Folder Include="Requests\Roles\Commands\" />
 		<Folder Include="Requests\Transactions\" />
 		<Folder Include="Requests\Trails\Events\" />
-		<Folder Include="Requests\Trails\Queries\" />
 	</ItemGroup>
 
 	<ItemGroup>
