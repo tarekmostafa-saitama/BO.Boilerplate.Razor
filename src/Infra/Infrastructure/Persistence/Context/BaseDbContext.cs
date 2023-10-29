@@ -41,19 +41,20 @@ public abstract class BaseDbContext : IdentityDbContext<ApplicationUser>
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
     {
-        foreach (var entry in ChangeTracker.Entries<IMustHaveTenant>().ToList())
-            switch (entry.State)
-            {
-                case EntityState.Added:
-                case EntityState.Modified:
-                    entry.Entity.TenantId = _tenantService.GetTenant().TenantId;
-                    break;
-            }
         ChangeTracker.DetectChanges();
-
         try
         {
             ChangeTracker.AutoDetectChangesEnabled = false;
+            foreach (var entry in ChangeTracker.Entries<IMustHaveTenant>().ToList())
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                    case EntityState.Modified:
+                        entry.Entity.TenantId = _tenantService.GetTenant().TenantId;
+                        break;
+                }
+
+
             var auditEntries = HandleAuditingBeforeSaveChanges(_currentUserService.Id);
             var result = await base.SaveChangesAsync(cancellationToken);
             await HandleAuditingAfterSaveChangesAsync(auditEntries, cancellationToken);
@@ -112,14 +113,14 @@ public abstract class BaseDbContext : IdentityDbContext<ApplicationUser>
                     break;
             }
 
-       
+
 
         var trailEntries = new List<AuditTrail>();
         foreach (var entry in ChangeTracker.Entries<IBaseAuditableEntity>())
-                     //.Where(e => e.Entity.GetType().IsGenericType &&
-                     //            e.Entity.GetType().GetGenericTypeDefinition() == typeof(IBaseAuditableEntity))
-                     //.Where(e => e.State is EntityState.Added or EntityState.Deleted or EntityState.Modified)
-                     //.ToList())
+        //.Where(e => e.Entity.GetType().IsGenericType &&
+        //            e.Entity.GetType().GetGenericTypeDefinition() == typeof(IBaseAuditableEntity))
+        //.Where(e => e.State is EntityState.Added or EntityState.Deleted or EntityState.Modified)
+        //.ToList())
         {
             if (entry.State == EntityState.Detached || entry.State == EntityState.Unchanged)
                 continue;
