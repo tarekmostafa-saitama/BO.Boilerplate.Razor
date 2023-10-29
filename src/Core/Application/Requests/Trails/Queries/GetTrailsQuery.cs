@@ -11,7 +11,7 @@ namespace Application.Requests.Trails.Queries;
 
 public record GetTrailsQuery(PaginateModel<string> model) : IRequest<PaginateResponseModel<TrailVm>>;
 
-public class GetTrailsQueryHandler : IRequestHandler<GetTrailsQuery, PaginateResponseModel<TrailVm>>
+internal class GetTrailsQueryHandler : IRequestHandler<GetTrailsQuery, PaginateResponseModel<TrailVm>>
 {
     private readonly IUnitOfWork _unitOfWork;
 

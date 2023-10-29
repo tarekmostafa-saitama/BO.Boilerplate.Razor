@@ -53,6 +53,8 @@ public class Specification<T> : ISpecification<T>
     }
 
 
+
+
     public List<Expression<Func<T, bool>>> AdditionalCriteria { get; private set; } = new();
 
     public Specification<T> ApplyCriteria(Expression<Func<T, bool>> criteria)

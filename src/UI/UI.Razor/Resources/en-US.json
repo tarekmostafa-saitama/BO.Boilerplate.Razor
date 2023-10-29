@@ -1,6 +1,6 @@
 {
   // Global
-  "requiredField": "This Field is required",
+  "requiredField": "This field is required",
   "edit": "Edit",
   "name": "Name",
   "operation": "Operations",
