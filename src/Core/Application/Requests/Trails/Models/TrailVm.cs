@@ -2,7 +2,7 @@ namespace Application.Requests.Trails.Models;
 
 public class TrailVm
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     public string UserId { get; set; }
     public string Type { get; set; }
     public string TableName { get; set; }

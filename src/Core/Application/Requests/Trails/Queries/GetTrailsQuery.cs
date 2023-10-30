@@ -36,6 +36,13 @@ internal class GetTrailsQueryHandler : IRequestHandler<GetTrailsQuery, PaginateR
         else
             spec = spec.ApplyOrderByDesc(x => x.DateTime);
 
+        if (!string.IsNullOrWhiteSpace(request.model.Request.SearchValue))
+            spec.ApplyCriteria(x => x.NewValues.Contains(request.model.Request.SearchValue)
+                                      || x.OldValues.Contains(request.model.Request.SearchValue)
+                                      || x.PrimaryKey.Contains(request.model.Request.SearchValue)
+                                      || x.AffectedColumns.Contains(request.model.Request.SearchValue)
+                                      || x.UserId.Contains(request.model.Request.SearchValue)
+                                      || x.Type.Contains(request.model.Request.SearchValue));
 
         var recordsTotal = await _unitOfWork.TrailsRepository.CountAsync(spec);
 

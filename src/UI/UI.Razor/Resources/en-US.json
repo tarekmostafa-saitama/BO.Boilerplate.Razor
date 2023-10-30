@@ -45,6 +45,17 @@
   "users_userName": "UserName",
   "users_password": "Password",
   "users_confirmPassword": "Confirm Password",
-  "users_Roles": "Roles"
+  "users_Roles": "Roles",
+
+
+  //transactionsPage
+  "transactions_userId": "User Id",
+  "transactions_type": "Type",
+  "transactions_tableName": "Table Name",
+  "transactions_dateTime": "Date",
+  "transactions_oldValues": "Old Value",
+  "transactions_newValues": "اNew Value",
+  "transactions_affectedColumns": "Affected Column",
+  "transactions_primaryKey": "Affected Column Id"
 
 }

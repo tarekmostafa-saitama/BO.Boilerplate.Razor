@@ -1,5 +1,161 @@
-﻿@{
-    ViewData["Title"] = "List";
-}
+﻿@using System.Globalization
+@using Shared.Permissions
+@{
+    ViewData["Title"] = StringLocalizer["transactions_list"];
 
-<h1>List</h1>
+    var isRTL = CultureInfo.CurrentCulture.Name.StartsWith("ar");
+
+    var hasCreateClaim = (await AuthorizationService.AuthorizeAsync(User, Permission.NameFor(Actions.Create, Resources.Transactions))).Succeeded;
+    var hasUpdateClaim = (await AuthorizationService.AuthorizeAsync(User, Permission.NameFor(Actions.Update, Resources.Transactions))).Succeeded;
+    var hasDeleteClaim = (await AuthorizationService.AuthorizeAsync(User, Permission.NameFor(Actions.Delete, Resources.Transactions))).Succeeded;
+
+}
+@section Styles
+    {
+    <link rel="stylesheet" href="~/dashboard/assets/1.11.5/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="~/dashboard/assets/responsive/2.2.9/css/responsive.bootstrap.min.css">
+    <link rel="stylesheet" href="~/dashboard/assets/buttons/2.2.2/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/json-tree-viewer@0.0.2/libs/jsonTree/jsonTree.min.css">
+    }
+
+<div class="row mb-4">
+    @if (hasCreateClaim)
+    {
+        <div>
+            <a class="btn btn-info" asp-controller="Transactions" asp-action="Create">@ViewLocalizer["transactions_create"] </a>
+        </div>
+    }
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0"> @ViewData["Title"] </h5>
+            </div>
+            <div class="card-body">
+                <table id="transactions-dt" class="server-side-dt table table-bordered table-responsive nowrap table-striped align-middle" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th>@ViewLocalizer["transactions_userId"]</th>
+                        <th>@ViewLocalizer["transactions_type"]</th>
+                        <th>@ViewLocalizer["transactions_tableName"]</th>
+                        <th>@ViewLocalizer["transactions_dateTime"]</th>
+                        <th>@ViewLocalizer["transactions_oldValues"]</th>
+                        <th>@ViewLocalizer["transactions_newValues"]</th>
+                        <th>@ViewLocalizer["transactions_affectedColumns"]</th>
+                        <th>@ViewLocalizer["transactions_primaryKey"]</th>
+                        <th>@ViewLocalizer["operations"]</th>
+
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    @section Scripts
+{
+    <script src="~/dashboard/assets/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="~/dashboard/assets/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="~/dashboard/assets/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/json-tree-viewer@0.0.2/libs/jsonTree/jsonTree.min.js"></script>      
+    <script>
+        $(document).ready(function() {
+
+            $.fn.dataTable.ext.errMode = 'none';
+            window.dataTable = $("#transactions-dt").DataTable({
+                "order": [],
+                "dom":
+                    "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
+                        "<'table-responsive'tr>" +
+                        "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
+                "oLanguage": {
+                    "oPaginate": {
+                        "sPrevious":
+                            '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>',
+                        "sNext":
+                            '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>'
+                    },
+                    "sInfo": "Showing page _PAGE_ of _PAGES_",
+                    "sSearch":
+                        '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                    "sSearchPlaceholder": "Search...",
+                    "sLengthMenu": "Results :  _MENU_",
+                },
+                "stripeClasses": [],
+                "lengthMenu": [7, 10, 20, 50],
+                "pageLength": 20,
+                "processing": true,
+                "language": {
+                    processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> ',
+                    @if (isRTL)
+                    {
+                        <text>
+                    url: "//cdn.datatables.net/plug-ins/1.13.1/i18n/ar.json"
+
+                        </text>
+                    }
+                },
+
+                "serverSide": true,
+                "filter": true,
+                "ajax": {
+                    "url": '@Url.Action("PaginateTransactions", "Transactions", new { area = "Admin" })',
+                    "type": "Post",
+                    "datatype": "json"
+                },
+
+                "columns": [
+                    { "data": "userId", "name": "UserId", "autoWidth": true },
+                    { "data": "type", "name": "Type", "autoWidth": true },
+                    { "data": "tableName", "name": "TableName", "autoWidth": true },
+                    { "data": "dateTime", "name": "DateTime", "autoWidth": true },
+                    { "data": "oldValues", "name": "OldValues", "autoWidth": true ,
+                      "render": function (data, type, row, meta) {
+                          console.log(this);
+                            return  jsonTree.create(JSON.parse(row.oldValues),  $(this));
+                                
+                        }
+                    },
+                    { "data": "newValues", "name": "NewValues", "autoWidth": true },
+                    { "data": "affectedColumns", "name": "AffectedColumns", "autoWidth": true },
+                    { "data": "primaryKey", "name": "PrimaryKey", "autoWidth": true },
+                    {
+                        "orderable": false,
+                        "render": function (data, type, row, meta) {
+                            return `
+                              @if (hasUpdateClaim)
+                              {
+                                  <text>
+
+                                             <span><a href="/Dashboard/Users/${row.id}/Update" class="btn btn-sm btn-soft-info"> @ViewLocalizer["edit"] </a></span>
+
+                                 </text>
+                              }
+                            @if (hasDeleteClaim)
+                            {
+                                <text>
+                                  <form class="d-inline formDeleteConfirmation" action="/Dashboard/Users/${row.id}/Delete" method="post">
+                                        <button
+                                            class="btn btn-sm btn-soft-danger" type="submit" id="role_${row.id}">
+                                            @ViewLocalizer["delete"]
+                                        </button>
+                                    </form>
+                                </text>
+                            }
+                                `
+                        }
+                    },
+                ],
+                "fnDrawCallback": function(oSettings, json) {
+                    // $('#countSpan').text(table.page.info().recordsTotal);
+                }
+
+            });
+        });
+    </script>
+
+}

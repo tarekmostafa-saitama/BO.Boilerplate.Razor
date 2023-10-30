@@ -36,12 +36,14 @@ public class UsersController : Controller
 
 
     [HttpGet("Dashboard/Users")]
+    [MustHavePermission(Actions.View, Resources.Users)]
     public IActionResult List()
     {
         return View();
     }
 
     [HttpPost("Dashboard/Users/Paginate")]
+    [MustHavePermission(Actions.View, Resources.Users)]
     public async Task<IActionResult> PaginateUsers(DateTime? from, DateTime? to)
     {
         var dataTableModel = new PaginateModel<string>

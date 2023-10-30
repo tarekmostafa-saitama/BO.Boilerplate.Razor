@@ -45,6 +45,18 @@
   "users_userName": "إسم المستخدم",
   "users_password": "الرقم السري",
   "users_confirmPassword": "تأكيد الرقم السري",
-  "users_Roles": "أدوار المستخدم"
+  "users_Roles": "أدوار المستخدم",
+
+
+  //transactionsPage
+  "transactions_userId": "رقم المستخدم",
+  "transactions_type": "نوع العملية" ,
+  "transactions_tableName": "أسم الجدول" ,
+  "transactions_dateTime": "تاريخ العملية"  ,
+  "transactions_oldValues": "القيمة القديمة",
+  "transactions_newValues": "القيمة الجديدة"  ,
+  "transactions_affectedColumns": "أسم العمود" ,
+  "transactions_primaryKey":  "رقم العمود",
+
 
 }
