@@ -57,76 +57,78 @@
 
 
     @section Scripts
-{
-    <script src="~/dashboard/assets/1.11.5/js/jquery.dataTables.min.js"></script>
-    <script src="~/dashboard/assets/1.11.5/js/dataTables.bootstrap5.min.js"></script>
-    <script src="~/dashboard/assets/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/json-tree-viewer@0.0.2/libs/jsonTree/jsonTree.min.js"></script>      
-    <script>
-        $(document).ready(function() {
+    {
+        <script src="~/dashboard/assets/1.11.5/js/jquery.dataTables.min.js"></script>
+        <script src="~/dashboard/assets/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+        <script src="~/dashboard/assets/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/json-tree-viewer@0.0.2/libs/jsonTree/jsonTree.min.js"></script>
+        <script>
+            $(document).ready(function() {
 
-            $.fn.dataTable.ext.errMode = 'none';
-            window.dataTable = $("#transactions-dt").DataTable({
-                "order": [],
-                "dom":
-                    "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
-                        "<'table-responsive'tr>" +
-                        "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
-                "oLanguage": {
-                    "oPaginate": {
-                        "sPrevious":
-                            '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>',
-                        "sNext":
-                            '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>'
+                $.fn.dataTable.ext.errMode = 'none';
+                window.dataTable = $("#transactions-dt").DataTable({
+                    "order": [],
+                    "dom":
+                        "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
+                            "<'table-responsive'tr>" +
+                            "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
+                    "oLanguage": {
+                        "oPaginate": {
+                            "sPrevious":
+                                '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>',
+                            "sNext":
+                                '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>'
+                        },
+                        "sInfo": "Showing page _PAGE_ of _PAGES_",
+                        "sSearch":
+                            '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                        "sSearchPlaceholder": "Search...",
+                        "sLengthMenu": "Results :  _MENU_",
                     },
-                    "sInfo": "Showing page _PAGE_ of _PAGES_",
-                    "sSearch":
-                        '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
-                    "sSearchPlaceholder": "Search...",
-                    "sLengthMenu": "Results :  _MENU_",
-                },
-                "stripeClasses": [],
-                "lengthMenu": [7, 10, 20, 50],
-                "pageLength": 20,
-                "processing": true,
-                "language": {
-                    processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> ',
-                    @if (isRTL)
-                    {
-                        <text>
-                    url: "//cdn.datatables.net/plug-ins/1.13.1/i18n/ar.json"
+                    "stripeClasses": [],
+                    "lengthMenu": [7, 10, 20, 50],
+                    "pageLength": 20,
+                    "processing": true,
+                    "language": {
+                        processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> ',
+                        @if (isRTL)
+                        {
+                            <text>
+                        url: "//cdn.datatables.net/plug-ins/1.13.1/i18n/ar.json"
 
-                        </text>
-                    }
-                },
-
-                "serverSide": true,
-                "filter": true,
-                "ajax": {
-                    "url": '@Url.Action("PaginateTransactions", "Transactions", new { area = "Admin" })',
-                    "type": "Post",
-                    "datatype": "json"
-                },
-
-                "columns": [
-                    { "data": "userId", "name": "UserId", "autoWidth": true },
-                    { "data": "type", "name": "Type", "autoWidth": true },
-                    { "data": "tableName", "name": "TableName", "autoWidth": true },
-                    { "data": "dateTime", "name": "DateTime", "autoWidth": true },
-                    { "data": "oldValues", "name": "OldValues", "autoWidth": true ,
-                      "render": function (data, type, row, meta) {
-                          console.log(this);
-                            return  jsonTree.create(JSON.parse(row.oldValues),  $(this));
-                                
+                            </text>
                         }
                     },
-                    { "data": "newValues", "name": "NewValues", "autoWidth": true },
-                    { "data": "affectedColumns", "name": "AffectedColumns", "autoWidth": true },
-                    { "data": "primaryKey", "name": "PrimaryKey", "autoWidth": true },
-                    {
-                        "orderable": false,
-                        "render": function (data, type, row, meta) {
-                            return `
+
+                    "serverSide": true,
+                    "filter": true,
+                    "ajax": {
+                        "url": '@Url.Action("PaginateTransactions", "Transactions", new { area = "Admin" })',
+                        "type": "Post",
+                        "datatype": "json"
+                    },
+
+                    "columns": [
+                        { "data": "userId", "name": "UserId", "autoWidth": true },
+                        { "data": "type", "name": "Type", "autoWidth": true },
+                        { "data": "tableName", "name": "TableName", "autoWidth": true },
+                        { "data": "dateTime", "name": "DateTime", "autoWidth": true },
+                        {
+                            "data": "oldValues",
+                            "name": "OldValues",
+                            "autoWidth": true,
+                            "render": function(data, type, row, meta) {
+                                return `<span class="json-content">${row.oldValues}</span>`;
+
+                            }
+                        },
+                        { "data": "newValues", "name": "NewValues", "autoWidth": true },
+                        { "data": "affectedColumns", "name": "AffectedColumns", "autoWidth": true },
+                        { "data": "primaryKey", "name": "PrimaryKey", "autoWidth": true },
+                        {
+                            "orderable": false,
+                            "render": function(data, type, row, meta) {
+                                return `
                               @if (hasUpdateClaim)
                               {
                                   <text>
@@ -147,15 +149,19 @@
                                 </text>
                             }
                                 `
-                        }
-                    },
-                ],
-                "fnDrawCallback": function(oSettings, json) {
-                    // $('#countSpan').text(table.page.info().recordsTotal);
-                }
+                            }
+                        },
+                    ],
+                    "fnDrawCallback": function(oSettings, json) {
+                        document.querySelectorAll('.json-content').forEach(x => {
+                            var content = x.textContent;
+                            x.textContent = "";
+                            jsonTree.create(JSON.parse(content), x);
+                        });
+                    }
 
+                });
             });
-        });
-    </script>
+        </script>
 
-}
+    }

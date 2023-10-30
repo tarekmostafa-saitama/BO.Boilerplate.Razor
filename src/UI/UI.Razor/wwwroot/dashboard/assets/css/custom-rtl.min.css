@@ -2,5 +2,12 @@
 body {
     font-family: 'Cairo', sans-serif
 }
-
+.json-content{
+    direction:ltr;
+}
+.json-content ul {
+    list-style-type:none;
+    padding:5px;
+    margin:0;
+}
 /*# sourceMappingURL=custom-rtl.min.css.map */
