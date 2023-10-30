@@ -122,9 +122,23 @@
 
                             }
                         },
-                        { "data": "newValues", "name": "NewValues", "autoWidth": true },
-                        { "data": "affectedColumns", "name": "AffectedColumns", "autoWidth": true },
-                        { "data": "primaryKey", "name": "PrimaryKey", "autoWidth": true },
+                        { "data": "newValues", "name": "NewValues", "autoWidth": true ,
+                        "render": function(data, type, row, meta) {
+                                return `<span class="json-content">${row.newValues}</span>`;
+
+                            }
+                        },
+                        { "data": "affectedColumns", "name": "AffectedColumns", "autoWidth": true ,
+                        "render": function(data, type, row, meta) {
+                                return `<span class="json-content">${row.affectedColumns}</span>`;
+
+                            }
+                        },
+                        { "data": "primaryKey", "name": "PrimaryKey", "autoWidth": true, 
+                        "render": function(data, type, row, meta) {
+                                return `<span class="json-content">${row.primaryKey}</span>`;
+
+                            } },
                         {
                             "orderable": false,
                             "render": function(data, type, row, meta) {
