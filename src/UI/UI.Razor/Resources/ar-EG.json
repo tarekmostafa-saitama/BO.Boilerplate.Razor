@@ -49,14 +49,15 @@
 
 
   //transactionsPage
+  "transactions_list": "قائمة عمليات المستخدمين",
   "transactions_userId": "المستخدم",
-  "transactions_type": "نوع العملية" ,
-  "transactions_tableName": "إسم الجدول" ,
-  "transactions_dateTime": "تاريخ العملية"  ,
+  "transactions_type": "نوع العملية",
+  "transactions_tableName": "إسم الجدول",
+  "transactions_dateTime": "تاريخ العملية",
   "transactions_oldValues": "القيم القديمة",
-  "transactions_newValues": "القيم الجديدة"  ,
-  "transactions_affectedColumns": "الأعمدة المتأثرة" ,
-  "transactions_primaryKey":  "قيمة الأعمدة الرئيسية"
+  "transactions_newValues": "القيم الجديدة",
+  "transactions_affectedColumns": "الأعمدة المتأثرة",
+  "transactions_primaryKey": "قيمة الأعمدة الرئيسية"
 
 
 }

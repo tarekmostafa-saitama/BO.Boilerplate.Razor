@@ -5,9 +5,7 @@
 
     var isRTL = CultureInfo.CurrentCulture.Name.StartsWith("ar");
 
-    var hasCreateClaim = (await AuthorizationService.AuthorizeAsync(User, Permission.NameFor(Actions.Create, Resources.Transactions))).Succeeded;
-    var hasUpdateClaim = (await AuthorizationService.AuthorizeAsync(User, Permission.NameFor(Actions.Update, Resources.Transactions))).Succeeded;
-    var hasDeleteClaim = (await AuthorizationService.AuthorizeAsync(User, Permission.NameFor(Actions.Delete, Resources.Transactions))).Succeeded;
+    var hasViewClaim = (await AuthorizationService.AuthorizeAsync(User, Permission.NameFor(Actions.View, Resources.Transactions))).Succeeded;
 
 }
 @section Styles
@@ -18,14 +16,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/json-tree-viewer@0.0.2/libs/jsonTree/jsonTree.min.css">
     }
 
-<div class="row mb-4">
-    @if (hasCreateClaim)
-    {
-        <div>
-            <a class="btn btn-info" asp-controller="Transactions" asp-action="Create">@ViewLocalizer["transactions_create"] </a>
-        </div>
-    }
-</div>
+
 <div class="row">
     <div class="col-lg-12">
         <div class="card">
@@ -40,10 +31,7 @@
                         <th>@ViewLocalizer["transactions_type"]</th>
                         <th>@ViewLocalizer["transactions_tableName"]</th>
                         <th>@ViewLocalizer["transactions_dateTime"]</th>
-                        <th>@ViewLocalizer["transactions_oldValues"]</th>
-                        <th>@ViewLocalizer["transactions_newValues"]</th>
                         <th>@ViewLocalizer["transactions_affectedColumns"]</th>
-                        <th>@ViewLocalizer["transactions_primaryKey"]</th>
                         <th>@ViewLocalizer["operations"]</th>
 
                     </tr>
@@ -113,55 +101,22 @@
                         { "data": "type", "name": "Type", "autoWidth": true },
                         { "data": "tableName", "name": "TableName", "autoWidth": true },
                         { "data": "dateTime", "name": "DateTime", "autoWidth": true },
-                        {
-                            "data": "oldValues",
-                            "name": "OldValues",
-                            "autoWidth": true,
-                            "render": function(data, type, row, meta) {
-                                return `<span class="json-content">${row.oldValues}</span>`;
-
-                            }
-                        },
-                        { "data": "newValues", "name": "NewValues", "autoWidth": true ,
-                        "render": function(data, type, row, meta) {
-                                return `<span class="json-content">${row.newValues}</span>`;
-
-                            }
-                        },
+                       
                         { "data": "affectedColumns", "name": "AffectedColumns", "autoWidth": true ,
                         "render": function(data, type, row, meta) {
                                 return `<span class="json-content">${row.affectedColumns}</span>`;
 
                             }
                         },
-                        { "data": "primaryKey", "name": "PrimaryKey", "autoWidth": true, 
-                        "render": function(data, type, row, meta) {
-                                return `<span class="json-content">${row.primaryKey}</span>`;
-
-                            } },
                         {
                             "orderable": false,
                             "render": function(data, type, row, meta) {
                                 return `
-                              @if (hasUpdateClaim)
-                              {
-                                  <text>
-
-                                             <span><a href="/Dashboard/Users/${row.id}/Update" class="btn btn-sm btn-soft-info"> @ViewLocalizer["edit"] </a></span>
-
-                                 </text>
-                              }
-                            @if (hasDeleteClaim)
-                            {
-                                <text>
-                                  <form class="d-inline formDeleteConfirmation" action="/Dashboard/Users/${row.id}/Delete" method="post">
-                                        <button
-                                            class="btn btn-sm btn-soft-danger" type="submit" id="role_${row.id}">
-                                            @ViewLocalizer["delete"]
-                                        </button>
-                                    </form>
-                                </text>
-                            }
+                             
+                                    @if (hasViewClaim)
+                                    {
+                               
+                                    }
                                 `
                             }
                         },

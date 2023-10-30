@@ -49,6 +49,7 @@
 
 
   //transactionsPage
+  "transactions_list": "Transactions List",
   "transactions_userId": "User Id",
   "transactions_type": "Type",
   "transactions_tableName": "Table Name",
