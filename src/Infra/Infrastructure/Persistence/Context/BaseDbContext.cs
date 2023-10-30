@@ -45,15 +45,7 @@ public abstract class BaseDbContext : IdentityDbContext<ApplicationUser>
         try
         {
             ChangeTracker.AutoDetectChangesEnabled = false;
-            foreach (var entry in ChangeTracker.Entries<IMustHaveTenant>().ToList())
-                switch (entry.State)
-                {
-                    case EntityState.Added:
-                    case EntityState.Modified:
-                        entry.Entity.TenantId = _tenantService.GetTenant().TenantId;
-                        break;
-                }
-
+            AttachTenantToEntities();
 
             var auditEntries = HandleAuditingBeforeSaveChanges(_currentUserService.Id);
             var result = await base.SaveChangesAsync(cancellationToken);
@@ -65,6 +57,18 @@ public abstract class BaseDbContext : IdentityDbContext<ApplicationUser>
         {
             ChangeTracker.AutoDetectChangesEnabled = true;
         }
+    }
+
+    private void AttachTenantToEntities()
+    {
+        foreach (var entry in ChangeTracker.Entries<IMustHaveTenant>().ToList())
+            switch (entry.State)
+            {
+                case EntityState.Added:
+                case EntityState.Modified:
+                    entry.Entity.TenantId = _tenantService.GetTenant().TenantId;
+                    break;
+            }
     }
 
 
