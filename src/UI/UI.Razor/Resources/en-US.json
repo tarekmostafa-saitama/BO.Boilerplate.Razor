@@ -25,6 +25,7 @@
   "layout_home": "Home",
   "layout_usersList": "Users List",
   "layout_rolesList": "Roles List",
+  "layout_tenantsList": "Tenants List",
   "layout_transactionsLog": "Transactions Log",
   "layout_logout": "Logout",
 
@@ -57,6 +58,10 @@
   "transactions_oldValues": "Old Value",
   "transactions_newValues": "اNew Value",
   "transactions_affectedColumns": "Affected Column",
-  "transactions_primaryKey": "Affected Column Id"
+  "transactions_primaryKey": "Affected Column Id",
 
+
+  //tenantsPage
+  "tenants_list": "Tenants List",
+  "tenants_create": "Create Tenant"
 }

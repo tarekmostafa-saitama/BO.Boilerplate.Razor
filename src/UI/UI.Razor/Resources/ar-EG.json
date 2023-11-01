@@ -25,6 +25,7 @@
   "layout_home": "الرئيسية",
   "layout_usersList": "قائمة المستخدمين",
   "layout_rolesList": "قائمة أدوار المستخدمين",
+  "layout_tenantsList": "قائمة ال tenants",
   "layout_transactionsLog": "قائمة عمليات المستخدمين",
   "layout_logout": "تسجيل الخروج",
 
@@ -57,7 +58,9 @@
   "transactions_oldValues": "القيم القديمة",
   "transactions_newValues": "القيم الجديدة",
   "transactions_affectedColumns": "الأعمدة المتأثرة",
-  "transactions_primaryKey": "قيمة الأعمدة الرئيسية"
+  "transactions_primaryKey": "قيمة الأعمدة الرئيسية",
 
-
+  //tenantsPage
+  "tenants_list": "قائمة ال tenants",
+  "tenants_create": "إنشاء tenant"
 }

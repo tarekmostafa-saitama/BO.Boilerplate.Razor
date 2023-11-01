@@ -618,6 +618,12 @@
 
                                 </li>
                                 <li class="nav-item">
+                                    <a asp-area="Admin" asp-controller="Tenants" asp-action="List" class="nav-link" role="button">
+                                        @ViewLocalizer["layout_tenantsList"]
+                                    </a>
+
+                                </li>
+                                <li class="nav-item">
                                     <a asp-area="Admin" asp-controller="Transactions" asp-action="List" class="nav-link" role="button">
                                         @ViewLocalizer["layout_transactionsLog"]
                                     </a>
@@ -678,6 +684,27 @@
     <i class="ri-arrow-up-line"></i>
 </button>
 <!--end back-to-top-->
+
+
+
+<!--start partial modal -->
+
+<div class="modal fade" id="generalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="generalModalTitle"></h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <div id="generalModalBody" class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+<!--end partial modal -->
+
 
 @await Component.InvokeAsync("NToastNotify")
 <mini-profiler position="@RenderPosition.BottomRight" max-traces="5" color-scheme="ColorScheme.Auto" nonce="45" decimal-places="2"/>

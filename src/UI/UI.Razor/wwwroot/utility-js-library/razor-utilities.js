@@ -1,4 +1,8 @@
-$(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
+$(document).ajaxStart(function () {
+    $.blockUI({
+        baseZ: 1500
+    });
+}).ajaxStop($.unblockUI);
 
 // Function for confirming and deleting an element.
 function DeleteConfirmation(

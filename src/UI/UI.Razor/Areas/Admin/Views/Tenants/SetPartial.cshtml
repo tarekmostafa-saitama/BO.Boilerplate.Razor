@@ -1,0 +1,14 @@
+﻿@model Application.Requests.Tenants.Models.TenantVm
+
+
+<form asp-formhelper="true"  method="post" asp-action="SetPartial" asp-controller="Tenants" asp-area="Admin" asp-route-id="@Model.Id">
+    <input hidden asp-for="Id" />
+    <div class=" mb-4">
+        <label asp-for="Name" class="form-label"></label><span class="text-danger font-weight-extra-bold ">*</span>
+        <input asp-for="Name" class="form-control">
+        <span class="text-danger" asp-validation-for="Name"></span>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary mt-3">@ViewLocalizer["save"]</button>
+</form>
