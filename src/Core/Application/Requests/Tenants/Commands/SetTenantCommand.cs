@@ -27,17 +27,16 @@ internal class SetTenantCommandHandler : IRequestHandler<SetTenantCommand ,Unit>
     }
     public async Task<Unit> Handle(SetTenantCommand request, CancellationToken cancellationToken)
     {
+        request.TenantVm.UseSharedDb = true;
+
         if (request.TenantVm.Id == default)
         {
             request.TenantVm.Id= Guid.NewGuid();
-            request.TenantVm.UseSharedDb = true;
             _unitOfWork.TenantsRepository.Add(request.TenantVm.Adapt<Tenant>());
-
         }
         else
         {
             _unitOfWork.TenantsRepository.Update(request.TenantVm.Adapt<Tenant>());
-
         }
 
         await _unitOfWork.CommitAsync();

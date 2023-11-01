@@ -26,7 +26,7 @@ internal class GetTenantsQueryHandler : IRequestHandler<GetTenantsQuery, List<Te
 
     public async Task<List<TenantVm>> Handle(GetTenantsQuery request, CancellationToken cancellationToken)
     {
-        var tenants = await _unitOfWork.TenantsRepository.GetAllAsync();
+        var tenants = await _unitOfWork.TenantsRepository.GetAllAsync(false);
         return tenants.Adapt<List<TenantVm>>(); 
 
     }

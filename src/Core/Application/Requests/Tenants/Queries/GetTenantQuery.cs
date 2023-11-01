@@ -25,7 +25,7 @@ internal class GetTenantQueryHandler : IRequestHandler<GetTenantQuery, TenantVm>
     }
     public async Task<TenantVm> Handle(GetTenantQuery request, CancellationToken cancellationToken)
     {
-        var returnedResult =await  _unitOfWork.TenantsRepository.GetSingleAsync(x => x.Id == request.TenantId);
+        var returnedResult =await  _unitOfWork.TenantsRepository.GetSingleAsync(x => x.Id == request.TenantId, false);
 
         return returnedResult.Adapt<TenantVm>(); 
     }

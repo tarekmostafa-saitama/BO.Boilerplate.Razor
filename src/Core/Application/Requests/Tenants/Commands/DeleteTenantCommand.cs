@@ -25,7 +25,7 @@ internal class DeleteTenantCommandHandler : IRequestHandler<DeleteTenantCommand,
 
     public async Task<Unit> Handle(DeleteTenantCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _unitOfWork.TenantsRepository.GetSingleAsync(x => x.Id == request.TenantId);
+        var entity = await _unitOfWork.TenantsRepository.GetSingleAsync(x => x.Id == request.TenantId,false);
         _unitOfWork.TenantsRepository.Remove(entity);
         await _unitOfWork.CommitAsync();
         return Unit.Value;
