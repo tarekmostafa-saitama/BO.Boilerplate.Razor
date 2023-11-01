@@ -2,5 +2,5 @@
 
 public interface IMustHaveTenant
 {
-    public string TenantId { get; set; }
+    public Guid TenantId { get; set; }
 }

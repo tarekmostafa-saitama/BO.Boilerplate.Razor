@@ -1,21 +1,21 @@
-﻿namespace Application.Common.Tenants;
+﻿using System.Security.AccessControl;
+using Domain.Entities;
+using Domain.Enums;
+
+namespace Application.Common.Tenants;
 
 public class TenantSettings
 {
-    public Configuration Defaults { get; set; }
-    public List<Tenant> Tenants { get; set; }
+    public Tenant Default { get; set; }
+    public List<Tenant> Tenants { get; set; } = new();
 }
 
-public class Tenant
-{
-    public string Name { get; set; }
-    public string TenantId { get; set; }
-    public string ConnectionString { get; set; }
-    public string DbProvider { get; set; }
-}
+
 
 public class Configuration
 {
-    public string DbProvider { get; set; }
+    public string Name { get; set; }
+    public Guid Id { get; set; }
+    public TenantDbProvider DbProvider { get; set; }
     public string ConnectionString { get; set; }
 }

@@ -11,9 +11,11 @@ public class UnitOfWork : IUnitOfWork
     {
         _context = context;
         TrailsRepository = new TrailsRepository(_context);
+        TenantsRepository = new TenantsRepository(_context);
     }
 
     public ITrailsRepository TrailsRepository { get; }
+    public ITenantsRepository TenantsRepository { get; }
 
     public async Task<int> CommitAsync()
     {

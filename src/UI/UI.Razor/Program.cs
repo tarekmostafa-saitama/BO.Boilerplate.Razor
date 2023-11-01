@@ -37,6 +37,7 @@ try
             options.RedirectDelay = 1000;
             options.ToastrDefaultPosition = ToastrPosition.BottomLeft;
         });
+    builder.Services.AddHttpContextAccessor();
     builder.Services.AddApplication();
     builder.Services.AddInfrastructure(builder.Configuration);
     builder.Services.AddMiniProfiler().AddEntityFramework();

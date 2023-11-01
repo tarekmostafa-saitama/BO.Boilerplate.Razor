@@ -2,6 +2,7 @@
 using Application.Common.Tenants;
 using Infrastructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 namespace Infrastructure.Persistence;
 
@@ -15,6 +16,7 @@ public class ApplicationDbContext : BaseDbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+
         base.OnModelCreating(modelBuilder);
     }
 }

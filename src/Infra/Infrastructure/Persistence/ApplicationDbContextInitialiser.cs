@@ -1,7 +1,9 @@
 ﻿using System.Security.Claims;
+using Application.Common.Tenants;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Shared.Permissions;
 
 namespace Infrastructure.Persistence;
@@ -12,14 +14,18 @@ public class ApplicationDbContextInitialiser
     private readonly ILogger<ApplicationDbContextInitialiser> _logger;
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly UserManager<ApplicationUser> _userManager;
+    private readonly TenantSettings _tenantSettings;
+
 
     public ApplicationDbContextInitialiser(ILogger<ApplicationDbContextInitialiser> logger,
-        ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        ApplicationDbContext context, UserManager<ApplicationUser> userManager, 
+        RoleManager<IdentityRole> roleManager, IOptions<TenantSettings> tenantSettings)
     {
         _logger = logger;
         _context = context;
         _userManager = userManager;
         _roleManager = roleManager;
+        _tenantSettings = tenantSettings.Value;
     }
 
 
@@ -48,7 +54,7 @@ public class ApplicationDbContextInitialiser
 
         // Default users
         var administrator = new ApplicationUser
-            { FullName = "Admin", UserName = "admin@email.com", Email = "admin@email.com", EmailConfirmed = true };
+            { FullName = "Admin", UserName = "admin@email.com", Email = "admin@email.com", EmailConfirmed = true, TenantId = _tenantSettings.Default.Id};
 
         if (_userManager.Users.All(u => u.UserName != administrator.UserName))
         {

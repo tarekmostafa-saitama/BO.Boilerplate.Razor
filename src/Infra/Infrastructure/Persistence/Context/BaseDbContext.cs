@@ -7,6 +7,7 @@ using Infrastructure.Identity;
 using Infrastructure.Trails;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using Shared.Contracts;
 
 namespace Infrastructure.Persistence.Context;
@@ -26,13 +27,14 @@ public abstract class BaseDbContext : IdentityDbContext<ApplicationUser>
     }
 
     public DbSet<Trail> Trails { get; set; }
+    public DbSet<Tenant> Tenants { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // QueryFilters need to be applied before base.OnModelCreating
         modelBuilder.AppendGlobalQueryFilter<ISoftDelete>(s => s.DeletedOn == null);
-        modelBuilder.AppendGlobalQueryFilter<IMustHaveTenant>(s => s.TenantId == _tenantService.GetTenant().TenantId);
+        modelBuilder.AppendGlobalQueryFilter<IMustHaveTenant>(s => s.TenantId == _tenantService.GetTenant().Id);
 
         base.OnModelCreating(modelBuilder);
 
@@ -66,7 +68,7 @@ public abstract class BaseDbContext : IdentityDbContext<ApplicationUser>
             {
                 case EntityState.Added:
                 case EntityState.Modified:
-                    entry.Entity.TenantId = _tenantService.GetTenant().TenantId;
+                    entry.Entity.TenantId = _tenantService.GetTenant().Id;
                     break;
             }
     }
@@ -77,14 +79,21 @@ public abstract class BaseDbContext : IdentityDbContext<ApplicationUser>
         var tenantConnectionString = _tenantService.GetConnectionString();
         if (!string.IsNullOrEmpty(tenantConnectionString))
         {
-            var dbProvider = _tenantService.GetDatabaseProvider();
-            if (dbProvider.ToLower() == "mssql")
-                optionsBuilder.UseSqlServer(_tenantService.GetConnectionString());
 
-            else if (dbProvider.ToLower() == "mysql")
-                optionsBuilder.UseMySQL(_tenantService.GetConnectionString());
-            else if (dbProvider.ToLower() == "postgresql")
-                optionsBuilder.UseNpgsql(_tenantService.GetConnectionString());
+            var dbProvider = _tenantService.GetDatabaseProvider();
+
+            switch (dbProvider)
+            {
+                case TenantDbProvider.MSSQL:
+                    optionsBuilder.UseSqlServer(tenantConnectionString);
+                    break;
+                case TenantDbProvider.MYSQL:
+                    optionsBuilder.UseMySQL(tenantConnectionString);
+                    break;
+                case TenantDbProvider.POSTGRES:
+                    optionsBuilder.UseNpgsql(tenantConnectionString);
+                    break;
+            }
         }
 
         base.OnConfiguring(optionsBuilder);
