@@ -32,7 +32,7 @@ public class AuthService : IAuthService
             await _signInManager.PasswordSignInAsync(user, loginUserRequest.Password, false, false);
         if (signInResult.Succeeded)
         {
-            _httpContextAccessor.HttpContext.Response.Cookies.Append("tenant",user.TenantId.ToString(),new CookieOptions(){Expires = DateTimeOffset.MaxValue});
+            _httpContextAccessor.HttpContext?.Response.Cookies.Append("tenant",user.TenantId.ToString(),new CookieOptions(){Expires = DateTimeOffset.MaxValue});
             return Response.Success(Unit.Value);
         }
        
@@ -41,7 +41,7 @@ public class AuthService : IAuthService
 
     public async Task<IResponse<Unit>> SignOutUserASync()
     {
-        _httpContextAccessor.HttpContext.Response.Cookies.Delete("tenant");
+        _httpContextAccessor.HttpContext?.Response.Cookies.Delete("tenant");
         await _signInManager.SignOutAsync();
         return Response.Success(Unit.Value);
     }
