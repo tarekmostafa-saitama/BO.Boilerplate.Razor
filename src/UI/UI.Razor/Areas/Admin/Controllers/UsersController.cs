@@ -2,6 +2,7 @@
 using Application.Requests.Roles.Commands;
 using Application.Requests.Roles.Models;
 using Application.Requests.Roles.Queries;
+using Application.Requests.Tenants.Queries;
 using Application.Requests.UsersManagement.Commands;
 using Application.Requests.UsersManagement.Queries;
 using FormHelper;
@@ -10,6 +11,7 @@ using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Localization;
 using NToastNotify;
 using Shared.Extensions;
@@ -63,6 +65,9 @@ public class UsersController : Controller
     {
         var roles = await _sender.Send(new GetRolesQuery());
         ViewBag.Roles = roles.Select(x=>x.Name).ToList();
+        var tenants = await _sender.Send(new GetTenantsQuery(true));
+        ViewBag.Tenants = new SelectList(tenants, "Id", "Name");
+
         return View();
     }
 
@@ -90,6 +95,8 @@ public class UsersController : Controller
         var roles = await _sender.Send(new GetRolesQuery());
         ViewBag.Roles = roles.Select(x => x.Name).ToList();
 
+        var tenants = await _sender.Send(new GetTenantsQuery(true));
+        ViewBag.Tenants = new SelectList(tenants, "Id", "Name", user.TenantId);
 
         user.RoleVms =   new List<RoleVm>(new RoleVm[roles.Count]);
         return View(user.Adapt<UpdateUserVm>());

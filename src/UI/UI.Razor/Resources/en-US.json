@@ -36,12 +36,12 @@
   "roles_update": "Update Role",
 
 
-  //UserssPage
+  //UsersPage
   "users_list": "Users List",
   "users_create": "Create User",
   "users_roleName": "User Name",
   "users_update": "Update User",
-  "users_fullName": "FullName",
+  "users_fullName": "Ful lName",
   "users_email": "Email",
   "users_userName": "UserName",
   "users_password": "Password",
@@ -63,5 +63,6 @@
 
   //tenantsPage
   "tenants_list": "Tenants List",
-  "tenants_create": "Create Tenant"
+  "tenants_create": "Create Tenant",
+  "tenants_name": "Tenant Name"
 }

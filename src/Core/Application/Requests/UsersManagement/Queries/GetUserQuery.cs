@@ -41,7 +41,8 @@ internal class GetUserQueryHandler : IRequestHandler<GetUserQuery, UserVm>
             UserName = user.UserName,
             Email = user.Email,
             FullName = user.FullName,
-            RoleVms = roles
+            RoleVms = roles,
+            TenantId = user.TenantId,
         };
 
         return userData;

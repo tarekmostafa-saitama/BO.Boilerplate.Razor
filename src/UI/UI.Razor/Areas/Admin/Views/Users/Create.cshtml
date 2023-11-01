@@ -78,6 +78,17 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label class="form-label" asp-for="TenantId">@ViewLocalizer["tenants_name"] </label><span class="text-danger font-weight-extra-bold ">*</span>
+                                <select asp-for="TenantId" asp-items="@ViewBag.Tenants" class="form-control"></select>
+                                <span class="text-danger" asp-validation-for="TenantId"></span>
+
+                            </div>
+                        </div>
+                    </div>
 
             
                 </div>
