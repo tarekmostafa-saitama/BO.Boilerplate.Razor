@@ -78,6 +78,7 @@ public class UserService : IUserService
             FullName = userVm.FullName,
             Email = userVm.Email,
             UserName = userVm.Email,
+            TenantId = userVm.TenantId
         };
         var result = await _userManager.CreateAsync(user, userVm.Password);
         if (result.Succeeded)
@@ -90,6 +91,7 @@ public class UserService : IUserService
         var user = await _userManager.FindByIdAsync(userVm.Id) ??
                    throw new NotFoundException("user not found with id= " + userVm.Id);
         user.FullName = userVm.FullName;
+        user.TenantId = userVm.TenantId;
 
         var result = await _userManager.UpdateAsync(user);
         if (result.Succeeded)

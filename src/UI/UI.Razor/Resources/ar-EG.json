@@ -1,6 +1,7 @@
 {
   // Global
   "requiredField": "هذا الحقل مطلوب",
+  "minLengthField": "هذا الحقل لا بد ان يكون اكثر من {0}",
   "edit": "تعديل",
   "name": "الإسم",
   "operations": "العمليات",

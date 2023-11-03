@@ -1,5 +1,13 @@
-﻿namespace Application.Common.Models.UserModels;
+﻿using Application.Common.Interfaces;
+using FluentValidation;
+using Microsoft.Extensions.Localization;
 
-public class UpdateUserValidator
+namespace Application.Common.Models.UserModels;
+
+public class UpdateUserValidator: AbstractValidator<UpdateUserVm>
 {
+    public UpdateUserValidator(IUserService userService, IStringLocalizer<CreateUserVm> localizer)
+    {
+        RuleFor(x => x.FullName).NotEmpty().WithMessage(localizer["requiredField"]);
+    }
 }
