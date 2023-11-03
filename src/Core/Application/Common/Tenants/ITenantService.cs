@@ -1,10 +1,12 @@
-﻿using Shared.ServiceContracts;
+﻿using Domain.Entities;
+using Domain.Enums;
+using Shared.ServiceContracts;
 
 namespace Application.Common.Tenants;
 
 public interface ITenantService : IScopedService
 {
-    public string GetDatabaseProvider();
+    public TenantDbProvider GetDatabaseProvider();
 
     public string GetConnectionString();
 

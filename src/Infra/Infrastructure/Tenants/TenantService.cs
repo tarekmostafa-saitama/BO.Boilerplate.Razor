@@ -1,61 +1,104 @@
 ﻿using Application.Common.Tenants;
+using Application.Repositories;
+using Dapper;
+using Domain.Entities;
+using Domain.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
+using Serilog;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
 
-namespace Infrastructure.Tenants;
-
-public class TenantService : ITenantService
+namespace Infrastructure.Tenants
 {
-    private readonly HttpContext _httpContext;
-    private readonly TenantSettings _tenantSettings;
-    private Tenant _currentTenant;
-
-    public TenantService(IHttpContextAccessor contextAccessor, IOptions<TenantSettings> tenantSettings)
+    public class TenantService : ITenantService
     {
-        _httpContext = contextAccessor.HttpContext;
-        _tenantSettings = tenantSettings.Value;
+        private readonly TenantSettings _tenantSettings;
+        private Tenant _currentTenant;
 
-        if (_httpContext is not null)
+        public TenantService(IHttpContextAccessor contextAccessor, IOptions<TenantSettings> tenantSettings)
         {
-            if (_httpContext.Request.Headers.TryGetValue("tenant", out var tenantId))
-                SetCurrentTenant(tenantId!);
-            else
-                // throw new ArgumentException("No tenant provided!");
-                // use default tenant
-                SetCurrentTenant("Default");
+            _tenantSettings = tenantSettings.Value;
+
+            // Initialize the current tenant based on the HttpContext or use the default tenant if not found.
+            SetCurrentTenant(contextAccessor.HttpContext != null && contextAccessor.HttpContext.Request.Cookies.TryGetValue("tenant", out var tenantId)
+                ? Guid.Parse(tenantId)
+                : Guid.Empty);
         }
-    }
 
-    public string GetConnectionString()
-    {
-        var currentConnectionString = _currentTenant is null || string.IsNullOrEmpty(_currentTenant.ConnectionString)
-            ? _tenantSettings.Defaults.ConnectionString
-            : _currentTenant.ConnectionString;
+        public string GetConnectionString()
+        {
+            // Get the connection string based on the current tenant or the default if using shared DB.
+            return _currentTenant is null || _currentTenant.UseSharedDb
+                ? _tenantSettings.Default.ConnectionString
+                : _currentTenant.ConnectionString;
+        }
 
-        return currentConnectionString;
-    }
+        public Tenant GetTenant()
+        {
+            return _currentTenant;
+        }
 
+        public TenantDbProvider GetDatabaseProvider()
+        {
+            // Get the database provider based on the current tenant or the default if using shared DB.
+            return _currentTenant.UseSharedDb
+                ? _tenantSettings.Default.DbProvider
+                : _currentTenant.DbProvider;
+        }
 
-    public Tenant GetTenant()
-    {
-        return _currentTenant;
-    }
+        private void SetCurrentTenant(Guid tenantId)
+        {
+            if (tenantId != Guid.Empty)
+            {
+                if (tenantId == _tenantSettings.Default.Id)
+                {
+                    // Use the default tenant settings if the tenant ID matches the default.
+                    _currentTenant = new Tenant()
+                    {
+                        ConnectionString = _tenantSettings.Default.ConnectionString,
+                        DbProvider = _tenantSettings.Default.DbProvider,
+                        Id = _tenantSettings.Default.Id,
+                        Name = _tenantSettings.Default.Name,
+                        UseSharedDb = true
+                    };
+                }
+                else
+                {
+                    IDbConnection dbConnection = new SqlConnection(_tenantSettings.Default.ConnectionString);
 
-    public string GetDatabaseProvider()
-    {
-        return _currentTenant is null || string.IsNullOrEmpty(_currentTenant.DbProvider)
-            ? _tenantSettings.Defaults.DbProvider
-            : _currentTenant.DbProvider;
-    }
+                    // Query the list of tenants from the database.
+                    _tenantSettings.Tenants = dbConnection.Query<Tenant>("SELECT * FROM Tenants").AsList();
 
+                    // Find the current tenant by ID.
+                    _currentTenant = _tenantSettings.Tenants.FirstOrDefault(t => t.Id == tenantId);
 
-    private void SetCurrentTenant(string tenantId)
-    {
-        _currentTenant = _tenantSettings.Tenants.FirstOrDefault(t => t.TenantId == tenantId);
+                    if (_currentTenant is null)
+                    {
+                        throw new ArgumentException("Invalid tenant ID");
+                    }
+                }
+            }
+            else
+            {
+                // Use the default tenant settings if no tenant ID is provided.
+                _currentTenant = new Tenant()
+                {
+                    ConnectionString = _tenantSettings.Default.ConnectionString,
+                    DbProvider = _tenantSettings.Default.DbProvider,
+                    Id = _tenantSettings.Default.Id,
+                    Name = _tenantSettings.Default.Name,
+                    UseSharedDb = true
+                };
+            }
 
-        if (_currentTenant is null) throw new ArgumentException("Invalid tenant ID");
-
-        if (string.IsNullOrEmpty(_currentTenant.ConnectionString))
-            _currentTenant.ConnectionString = _tenantSettings.Defaults.ConnectionString;
+            if (_currentTenant.UseSharedDb)
+            {
+                _currentTenant.ConnectionString = _tenantSettings.Default.ConnectionString;
+            }
+        }
     }
 }

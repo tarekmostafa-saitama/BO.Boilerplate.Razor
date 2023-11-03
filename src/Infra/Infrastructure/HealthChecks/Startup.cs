@@ -21,7 +21,7 @@ internal static class Startup
         {
             var connectionString = !string.IsNullOrWhiteSpace(tenant.ConnectionString)
                 ? tenant.ConnectionString
-                : tenantSettings.Defaults.ConnectionString;
+                : tenantSettings.Default.ConnectionString;
             healthBuilder.AddSqlServer(connectionString,
                 tags: new List<string> { "database", "rational", "ado" },
                 name: $"Tenant Db: {tenant.Name} Health Check");

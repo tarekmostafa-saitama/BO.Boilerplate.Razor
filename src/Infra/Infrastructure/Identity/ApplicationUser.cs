@@ -4,7 +4,7 @@ using Shared.Contracts;
 
 namespace Infrastructure.Identity;
 
-public class ApplicationUser : IdentityUser, ISoftDelete, IBaseAuditableEntity
+public class ApplicationUser : IdentityUser, ISoftDelete, IBaseAuditableEntity, IMustHaveTenant
 {
     public string FullName { get; set; }
     public DateTimeOffset CreatedOn { get; set; }
@@ -14,4 +14,5 @@ public class ApplicationUser : IdentityUser, ISoftDelete, IBaseAuditableEntity
 
     public DateTimeOffset? DeletedOn { get; set; }
     public string DeletedBy { get; set; }
+    public Guid TenantId { get; set; }
 }

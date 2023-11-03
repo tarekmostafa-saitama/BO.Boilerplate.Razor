@@ -11,6 +11,7 @@
 		<Folder Include="Common\Tenants\" />
 		<Folder Include="Mapping\" />
 		<Folder Include="Requests\Roles\Commands\" />
+		<Folder Include="Requests\Tenants\Queries\" />
 		<Folder Include="Requests\Transactions\" />
 		<Folder Include="Requests\Trails\Events\" />
 	</ItemGroup>

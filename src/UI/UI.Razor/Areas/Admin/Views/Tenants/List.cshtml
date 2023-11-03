@@ -1,0 +1,133 @@
+﻿@model System.Collections.Generic.List<Application.Requests.Tenants.Models.TenantVm>
+@using System.Globalization
+@using Shared.Permissions
+
+@{
+    ViewData["Title"] = StringLocalizer["tenants_list"];
+    var isRTL = CultureInfo.CurrentCulture.Name.StartsWith("ar");
+    //TODO: Change Resource To Tenants
+    var hasCreateClaim = (await AuthorizationService.AuthorizeAsync(User, Permission.NameFor(Actions.Create, Resources.Roles))).Succeeded;
+    var hasUpdateClaim = (await AuthorizationService.AuthorizeAsync(User, Permission.NameFor(Actions.Update, Resources.Roles))).Succeeded;
+    var hasDeleteClaim = (await AuthorizationService.AuthorizeAsync(User, Permission.NameFor(Actions.Delete, Resources.Roles))).Succeeded;
+
+}
+
+@section Styles
+{
+    <link rel="stylesheet" href="~/dashboard/assets/1.11.5/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="~/dashboard/assets/responsive/2.2.9/css/responsive.bootstrap.min.css">
+    <link rel="stylesheet" href="~/dashboard/assets/buttons/2.2.2/css/buttons.dataTables.min.css">
+}
+
+
+
+<div class="row mb-4">
+    @if (hasCreateClaim)
+    {
+        <div>
+            <a class="btn btn-info" onclick="getPartialViewModal('@Url.Action("SetPartial","Tenants",new{id=default(Guid)})', '@ViewLocalizer["tenants_create"]')">@ViewLocalizer["tenants_create"] </a>
+        </div>
+    }
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">  @ViewData["Title"]</h5>
+            </div>
+            <div class="card-body">
+                <table id="client-side-dt" class="client-side-dt table table-bordered table-responsive nowrap table-striped align-middle" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th>@ViewLocalizer["name"]</th>
+
+                        <th>@ViewLocalizer["operations"]</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var tenantVm in Model)
+                    {
+                        <tr>
+                            <td>@tenantVm.Name</td>
+                            <td>
+                                @if (hasUpdateClaim)
+                                {
+                                    <a onclick="getPartialViewModal('@Url.Action("SetPartial","Tenants",new{id=tenantVm.Id})', '@ViewLocalizer["edit"]')"
+                                       class="btn btn-sm btn-soft-info">
+                                        @ViewLocalizer["edit"]
+                                    </a>
+                                }
+                                @if (hasDeleteClaim)
+                                {
+                                    <form class="d-inline formDeleteConfirmation" asp-route-id="@tenantVm.Id" asp-action="Delete" asp-controller="Tenants"
+                                          method="post">
+                                        <button
+                                            class="btn btn-sm btn-soft-danger" type="submit" id="role_@tenantVm.Id">
+                                            @ViewLocalizer["delete"]
+                                        </button>
+                                    </form>
+                                }
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <script src="~/dashboard/assets/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="~/dashboard/assets/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="~/dashboard/assets/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $.fn.dataTable.ext.errMode = 'none';
+            window.dataTable = $("#client-side-dt").DataTable({
+                "dom":
+                    "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
+                        "<'table-responsive'tr>" +
+                        "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
+                "oLanguage": {
+                    "oPaginate": {
+                        "sPrevious":
+                            '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>',
+                        "sNext":
+                            '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>'
+                    },
+                    "sInfo": "Showing page _PAGE_ of _PAGES_",
+                    "sSearch":
+                        '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                    "sSearchPlaceholder": "Search...",
+                    "sLengthMenu": "Results :  _MENU_",
+                },
+                "stripeClasses": [],
+                "lengthMenu": [7, 10, 20, 50],
+                "aoColumnDefs": [
+                    { "bSortable": false, "aTargets": [1] },
+                    { "bSearchable": false, "aTargets": [1] }
+                ],
+                "pageLength": 20,
+                "processing": true,
+                "language": {
+                    processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> ',
+
+                    @if (isRTL)
+                    {
+                        <text>
+                    url: "//cdn.datatables.net/plug-ins/1.13.1/i18n/ar.json"
+
+                        </text>
+                    }              
+                },
+
+                "serverSide": false
+
+            });
+        });
+    </script>
+}

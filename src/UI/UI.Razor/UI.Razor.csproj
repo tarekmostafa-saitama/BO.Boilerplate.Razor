@@ -57,10 +57,14 @@
   </ItemGroup>
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Areas\Admin\Views\Home\Home.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Admin\Views\Tenants\SetPartial.cshtml" />
     <_ContentIncludedByDefault Remove="Areas\Admin\Views\Users\Update.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <UpToDateCheckInput Remove="Areas\Admin\Views\Users\Update.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Admin\Views\Tenants\SetPartial.cshtml" />
   </ItemGroup>
 
 </Project>
