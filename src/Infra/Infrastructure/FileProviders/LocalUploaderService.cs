@@ -61,6 +61,33 @@ public class LocalUploaderService : IFileUploaderService
         var di = new DirectoryInfo(path);
         foreach (var file in di.EnumerateFiles()) file.Delete();
     }
+    public void Delete(string fileName, string folderName = "uploads")
+    {
+        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", folderName, fileName);
+        if (File.Exists(filePath))
+        {
+            File.Delete(filePath);
+        }
+        else
+        {
+            _logger.LogWarning("File {fileName} in folder {folderName} does not exist.", fileName, folderName);
+        }
+    }
+
+    public bool Exists(string fileName, string folderName = "uploads")
+    {
+        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", folderName, fileName);
+        return File.Exists(filePath);
+    }
+
+
+
+
+
+
+
+
+
 
     private static bool IsImageExtension(string extension)
     {
