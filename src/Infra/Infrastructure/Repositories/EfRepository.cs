@@ -15,7 +15,7 @@ public class EfRepository<TEntity> : IRepository<TEntity> where TEntity : class
     }
 
 
-    public async Task<TEntity> GetSingleAsync(Expression<Func<TEntity, bool>> criteria, bool trackChanges = true,
+    public async Task<TEntity> GetSingleAsync(Expression<Func<TEntity, bool>> criteria = null, bool trackChanges = false,
         params Expression<Func<TEntity, object>>[] includes)
     {
         IQueryable<TEntity> query = _entities;
@@ -25,11 +25,13 @@ public class EfRepository<TEntity> : IRepository<TEntity> where TEntity : class
 
         if (includes != null)
             query = includes.Aggregate(query, (current, include) => current.Include(include));
+        if(criteria != null)
+            return await query.FirstOrDefaultAsync(criteria);
 
-        return await query.FirstOrDefaultAsync(criteria);
+        return await query.FirstOrDefaultAsync();
     }
 
-    public async Task<IEnumerable<TEntity>> GetAllAsync(bool trackChanges = true,
+    public async Task<IEnumerable<TEntity>> GetAllAsync(bool trackChanges = false,
         params Expression<Func<TEntity, object>>[] includes)
     {
         IQueryable<TEntity> query = _entities;
@@ -43,7 +45,7 @@ public class EfRepository<TEntity> : IRepository<TEntity> where TEntity : class
         return await query.ToListAsync();
     }
 
-    public async Task<IEnumerable<TEntity>> GetAllAsync(ISpecification<TEntity> specification, bool trackChanges = true,
+    public async Task<IEnumerable<TEntity>> GetAllAsync(ISpecification<TEntity> specification, bool trackChanges = false,
         params Expression<Func<TEntity, object>>[] includes)
     {
         IQueryable<TEntity> query = _entities;

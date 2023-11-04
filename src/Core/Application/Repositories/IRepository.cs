@@ -6,19 +6,19 @@ namespace Application.Repositories;
 public interface IRepository<TEntity> where TEntity : class
 {
     Task<TEntity> GetSingleAsync(
-        Expression<Func<TEntity, bool>> criteria,
-        bool trackChanges = true,
+        Expression<Func<TEntity, bool>> criteria = null,
+        bool trackChanges = false,
         params Expression<Func<TEntity, object>>[] includes);
 
 
     Task<IEnumerable<TEntity>> GetAllAsync(
-        bool trackChanges = true,
+        bool trackChanges = false,
         params Expression<Func<TEntity, object>>[] includes);
 
 
     Task<IEnumerable<TEntity>> GetAllAsync(
         ISpecification<TEntity> specification,
-        bool trackChanges = true,
+        bool trackChanges = false,
         params Expression<Func<TEntity, object>>[] includes);
 
 
