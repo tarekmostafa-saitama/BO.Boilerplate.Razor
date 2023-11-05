@@ -2,6 +2,7 @@
   // Global
   "requiredField": "هذا الحقل مطلوب",
   "edit": "تعديل",
+  "view": "التفاصل",
   "name": "الإسم",
   "operations": "العمليات",
   "delete": "حذف",

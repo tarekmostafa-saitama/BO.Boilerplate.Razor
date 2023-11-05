@@ -10,5 +10,13 @@ body {
     padding:5px;
     margin:0;
 }
+.json-content-partial{
+    direction:ltr;
+}
+.json-content-partial ul {
+    list-style-type: none;
+    padding: 5px;
+    margin: 0;
+}
 
 /*# sourceMappingURL=custom-rtl.min.css.map */

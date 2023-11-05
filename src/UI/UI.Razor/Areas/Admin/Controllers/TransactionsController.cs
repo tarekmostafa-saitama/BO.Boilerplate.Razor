@@ -1,4 +1,5 @@
 ﻿using Application.Requests.Trails.Queries;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Infrastructure.Identity.PermissionHandlers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -37,5 +38,13 @@ public class TransactionsController : Controller
         };
         var model = await _sender.Send(new GetTrailsQuery(dataTableModel));
         return Ok(model);
+    }
+
+    [HttpGet("Dashboard/Transactions/{id}/ViewPartial")]
+    [MustHavePermission(Actions.View, Resources.Transactions)]
+    public async Task<IActionResult> ViewPartial(int id)
+    {
+        var result = await _sender.Send(new GetTrailQuery(id)); 
+        return PartialView(result);
     }
 }

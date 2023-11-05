@@ -2,6 +2,7 @@
   // Global
   "requiredField": "This field is required",
   "edit": "Edit",
+  "view": "View",
   "name": "Name",
   "operation": "Operations",
   "delete": "Delete",

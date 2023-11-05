@@ -1,0 +1,51 @@
+﻿@model Application.Requests.Trails.Models.TrailVm
+
+
+<table class="table table-striped">
+    <tbody>
+        <tr>
+            <th scope="row"><label asp-for="@Model.PrimaryKey"></label></th>
+            <td class="json-content-partial">@Model.PrimaryKey</td>
+        </tr>
+        <tr>
+            <th scope="row"><label asp-for="@Model.DateTime"></label></th>
+            <td>@Model.DateTime</td>
+        </tr>
+        <tr>
+            <th scope="row"><label asp-for="@Model.TableName"></label></th>
+            <td>@Model.TableName</td>
+        </tr>
+
+        <tr>
+            <th scope="row"><label asp-for="@Model.AffectedColumns"></label></th>
+            <td class="json-content-partial">@Model.AffectedColumns</td>
+        </tr>
+        <tr>
+            <th scope="row"><label asp-for="@Model.OldValues"></label></th>
+            <td class="json-content-partial">@Model.OldValues</td>
+        </tr> 
+        <tr>
+            <th scope="row"><label asp-for="@Model.NewValues"></label></th>
+            <td class="json-content-partial">@Model.NewValues</td>
+        </tr>    
+        <tr>
+            <th scope="row"><label asp-for="@Model.Type"></label></th>
+            <td >@Model.Type</td>
+        </tr> 
+        <tr>
+            <th scope="row"><label asp-for="@Model.UserId"></label></th>
+            <td>@Model.UserId</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<script>
+    document.querySelectorAll('.json-content-partial').forEach(x => {
+        if (x.textContent) {
+            var content = x.textContent;
+            x.textContent = "";
+            jsonTree.create(JSON.parse(content), x);
+        }
+    });
+</script>
