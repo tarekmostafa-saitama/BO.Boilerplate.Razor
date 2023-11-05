@@ -5,12 +5,12 @@ namespace Application.Requests.Users.Models;
 
 public class LoginUserRequestValidator : AbstractValidator<LoginUserRequest>
 {
-    public LoginUserRequestValidator(IStringLocalizer<LoginUserRequestValidator> stringLocalizer)
+    public LoginUserRequestValidator(IStringLocalizer<LoginUserRequestValidator> localizer)
     {
         RuleFor(x => x.Email)
-            .NotEmpty().WithMessage(stringLocalizer["requiredField"]);
+            .NotEmpty().WithMessage(localizer["requiredField"]);
         RuleFor(x => x.Password)
-            .NotEmpty().WithMessage(stringLocalizer["requiredField"])
-            .MinimumLength(6).WithMessage("djkdsio");
+            .NotEmpty().WithMessage(localizer["requiredField"])
+            .MinimumLength(6).WithMessage(localizer["minLengthField" , 6]);
     }
 }

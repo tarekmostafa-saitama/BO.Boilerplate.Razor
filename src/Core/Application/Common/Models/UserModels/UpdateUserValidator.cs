@@ -6,8 +6,9 @@ namespace Application.Common.Models.UserModels;
 
 public class UpdateUserValidator: AbstractValidator<UpdateUserVm>
 {
-    public UpdateUserValidator(IUserService userService, IStringLocalizer<CreateUserVm> localizer)
+    public UpdateUserValidator(IStringLocalizer<CreateUserVm> localizer)
     {
         RuleFor(x => x.FullName).NotEmpty().WithMessage(localizer["requiredField"]);
+        RuleFor(x => x.TenantId).NotEmpty().WithMessage(localizer["requiredField"]);
     }
 }

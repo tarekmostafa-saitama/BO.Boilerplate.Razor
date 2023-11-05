@@ -1,7 +1,6 @@
 {
   // Global
   "requiredField": "هذا الحقل مطلوب",
-  "minLengthField": "هذا الحقل لا بد ان يكون اكثر من {0}",
   "edit": "تعديل",
   "name": "الإسم",
   "operations": "العمليات",
@@ -10,6 +9,11 @@
   "save": "حفظ",
   "savedSuccess": "تم الحفظ بنجاح",
   "deleteSuccessfully": "تم الحذف بنجاح",
+  "notValidEmail": "البريد الإلكتروني غير صحيح",
+  "emailUsedBefore": "البريد الإلكتروني مستخدم من قبل",
+  "nameUsedBefore": "الأسم مستخدم من قبل",
+  "notEqualPassword": "برجاء أدخال رقم سري متطابق",
+  "minLengthField": "هذا الحقل لا بد ان يكون اكثر من {0}",
 
 
   // Login Page

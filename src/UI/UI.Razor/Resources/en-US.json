@@ -9,6 +9,11 @@
   "save": "Save",
   "savedSuccess": "Data Saved Successfully",
   "deleteSuccessfully": "Item Deleted Successfully",
+  "notValidEmail": "Email Address not valid",
+  "emailUsedBefore": "Email Address used before",
+  "nameUsedBefore": "Name used before",
+  "notEqualPassword": "Password and confirm password not same",
+  "minLengthField": "This field must be more than {0}",
 
   // Login Page
   "loginPage_email": "Email Address",
@@ -41,7 +46,7 @@
   "users_create": "Create User",
   "users_roleName": "User Name",
   "users_update": "Update User",
-  "users_fullName": "Ful lName",
+  "users_fullName": "FullName",
   "users_email": "Email",
   "users_userName": "UserName",
   "users_password": "Password",
