@@ -3,6 +3,6 @@ using Shared.ServiceContracts;
 
 namespace Application.Repositories;
 
-public interface ITenantsRepository : IRepository<Tenant>, IScopedService
+public interface ITenantsRepository : IRepository<Tenant>
 {
 }

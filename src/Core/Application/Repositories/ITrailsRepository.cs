@@ -3,6 +3,6 @@ using Shared.ServiceContracts;
 
 namespace Application.Repositories;
 
-public interface ITrailsRepository : IRepository<Trail>, IScopedService
+public interface ITrailsRepository : IRepository<Trail>
 {
 }
