@@ -44,6 +44,7 @@
                         <th>@ViewLocalizer["users_fullName"]</th>
                         <th>@ViewLocalizer["users_userName"]</th>
                         <th>@ViewLocalizer["users_email"]</th>
+                        <th>@ViewLocalizer["users_isLocked"]</th>
                         <th>@ViewLocalizer["operations"]</th>
 
                     </tr>
@@ -110,20 +111,41 @@
                     { "data": "fullName", "name": "FullName", "autoWidth": true },
                     { "data": "userName", "name": "UserName", "autoWidth": true },
                     { "data": "email", "name": "Email", "autoWidth": true },
+                    { "data": "isLockedDown", "name": "IsLockedDown", "autoWidth": true ,
+                     "render": function(data, type, row, meta) {
+                            if (row.isLockedDown == "False") {
+                                return `
+                                                           <span class="badge bg-success"> Yes </span>
+                                                `
+                          
+                            } else {
+                                return `
+                                                               <span class="badge bg-danger">No</span>
+                                                    `
+                            }
+
+                        }
+                    },
                     {
                         "orderable": false,
                         "render": function (data, type, row, meta) {
                             return `
                               @if (hasUpdateClaim)
                               {
+
                                   <text>
-
-                                             <span><a href="/Dashboard/Users/${row.id}/Update" class="btn btn-sm btn-soft-info"> @ViewLocalizer["edit"] </a></span>
-
+                                     <span><a href="/Dashboard/Users/${row.id}/Update" class="btn btn-sm btn-soft-info"> @ViewLocalizer["edit"] </a></span>
                                  </text>
+
                               }
-                            @if (hasDeleteClaim)
-                            {
+                               
+                                <span><a onclick="getPartialViewModal('/Dashboard/Users/${row.id}/AlterUserPasswordPartial' , '@ViewLocalizer["users_changePassword"]')" class="btn btn-sm btn-soft-primary"> @ViewLocalizer["users_changePassword"] </a></span>
+                                <span><a href="/Dashboard/Users/${row.id}/FastLogin" class="btn btn-sm btn-soft-warning"> @ViewLocalizer["users_fastLogin"] </a></span>
+                                <span><a href="/Dashboard/Users/${row.id}/ToggleUserActivation" class="btn btn-sm btn-soft-info"> @ViewLocalizer["users_toggle"] </a></span>
+                              
+                             
+                       @if(hasDeleteClaim)
+                        {
                                 <text>
                                   <form class="d-inline formDeleteConfirmation" action="/Dashboard/Users/${row.id}/Delete" method="post">
                                         <button
@@ -133,7 +155,10 @@
                                     </form>
                                 </text>
                             }
+                           
+                            
                                 `
+
                         }
                     },
                 ],
@@ -144,5 +169,10 @@
             });
         });
     </script>
+    <script>
+        function toggleUserAccount(url) {
+            window.location.href = url;
 
+        }
+    </script>
 }

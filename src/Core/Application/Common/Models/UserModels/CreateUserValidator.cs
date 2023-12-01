@@ -13,7 +13,7 @@ public class CreateUserValidator : AbstractValidator<CreateUserVm>
 
         RuleFor(x => x.Email).NotEmpty().WithMessage(localizer["requiredField"]);
         RuleFor(x => x.Email).EmailAddress().WithMessage(localizer["notValidEmail"]);
-        RuleFor(x => x.Email).MustAsync(async (x,context) => await userService.GetUserByEmailAsync(x) == null)
+        RuleFor(x => x.Email).Must( (x,context) => !userService.IsUserExistByEmailAsync(x.Email).Result)
             .WithMessage(localizer["emailUsedBefore"]);
 
         RuleFor(x => x.Password).MinimumLength(6).WithMessage(localizer["minLengthField",5]);

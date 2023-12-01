@@ -15,4 +15,5 @@ public class ApplicationUser : IdentityUser, ISoftDelete, IBaseAuditableEntity, 
     public DateTimeOffset? DeletedOn { get; set; }
     public string DeletedBy { get; set; }
     public Guid TenantId { get; set; }
+    public bool IsLockedDown { get; set; }
 }

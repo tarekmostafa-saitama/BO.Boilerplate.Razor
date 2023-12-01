@@ -53,6 +53,10 @@
   "users_password": "Password",
   "users_confirmPassword": "Confirm Password",
   "users_Roles": "Roles",
+  "users_changePassword": "Change Password",
+  "users_fastLogin": "Fast Login",
+  "users_toggle": "Activate/Lock Account",
+  "users_isLocked": "Is Account Activated ?",
 
 
   //transactionsPage

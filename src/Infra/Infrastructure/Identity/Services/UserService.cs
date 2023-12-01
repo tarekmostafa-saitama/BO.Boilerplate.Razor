@@ -70,6 +70,12 @@ public class UserService : IUserService
         throw new NotFoundException("user not found with email= " + email);
     }
 
+    public async Task<bool> IsUserExistByEmailAsync(string email)
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+        return user != null; 
+    }
+
 
     public async Task<IResponse<string>> CreateUserAsync(CreateUserVm userVm)
     {

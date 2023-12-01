@@ -10,6 +10,7 @@ public interface IUserService : IScopedService
     Task<PaginateResponseModel<UserVm>> GetUsersInRoleAsync(PaginateModel<string> model);
     Task<UserVm> GetUserByIdAsync(string userId);
     Task<UserVm> GetUserByEmailAsync(string email);
+    Task<bool> IsUserExistByEmailAsync(string email);
 
     Task<IResponse<string>> CreateUserAsync(CreateUserVm userVm);
     Task<IResponse<string>> UpdateUserAsync(UpdateUserVm userVm);

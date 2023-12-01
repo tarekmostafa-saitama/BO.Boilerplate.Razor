@@ -53,8 +53,11 @@
   "users_password": "الرقم السري",
   "users_confirmPassword": "تأكيد الرقم السري",
   "users_Roles": "أدوار المستخدم",
-
-
+  "users_changePassword": "تغيير كلمة السر",
+  "users_fastLogin": "تسجيل دخول سريع",
+  "users_NewPassword": "الرقم السري الجديد",
+  "users_toggle": "تفعيل/تعطيل الحساب",
+  "users_isLocked": "هل الحساب فعال",
   //transactionsPage
   "transactions_list": "قائمة عمليات المستخدمين",
   "transactions_userId": "المستخدم",

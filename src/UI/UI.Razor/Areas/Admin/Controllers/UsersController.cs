@@ -3,12 +3,19 @@ using Application.Requests.Roles.Commands;
 using Application.Requests.Roles.Models;
 using Application.Requests.Roles.Queries;
 using Application.Requests.Tenants.Queries;
+using Application.Requests.Users.Commands;
+using Application.Requests.Users.Models;
+using Application.Requests.Users.Queries;
 using Application.Requests.UsersManagement.Commands;
 using Application.Requests.UsersManagement.Queries;
+using DocumentFormat.OpenXml.Spreadsheet;
 using FormHelper;
+using Hangfire;
+using Infrastructure.Identity;
 using Infrastructure.Identity.PermissionHandlers;
 using Mapster;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -123,6 +130,55 @@ public class UsersController : Controller
     {
         await _sender.Send(new DeleteUserCommand(userId));
         _toastNotification.AddSuccessToastMessage(_stringLocalizer["deleteSuccessfully"]);
+        return RedirectToAction(nameof(List));
+    }
+
+
+    [HttpGet("Dashboard/Users/{userId}/FastLogin")]
+    public async Task<IActionResult> FastLogin(string userId)
+    {
+
+        var result = await _sender.Send(new FastLoginQuery(userId));
+        if (!result.Succeeded)
+        {
+          _toastNotification.AddErrorToastMessage(result.Errors[0]);
+          throw new Exception(); 
+        }
+
+        _toastNotification.AddSuccessToastMessage(_stringLocalizer["loginPage_successLogin"].Value);
+        return RedirectToAction("Home", "Home");
+
+    }
+
+
+    [HttpGet("Dashboard/Users/{userId}/AlterUserPasswordPartial")]
+    public async Task<IActionResult> AlterUserPasswordPartial(string userId)
+    {
+        return PartialView(new AlterPasswordVm(){UserId = userId});
+    }
+
+
+    [HttpPost("Dashboard/Users/{userId}/AlterUserPasswordPartial")]
+    [FormValidator]
+    public async Task<IActionResult> AlterUserPasswordPartial(AlterPasswordVm changePassword , string userId)
+    {
+        var result = await _sender.Send(new AlterPasswordCommand(changePassword)); 
+
+        if (result.Succeeded)
+            return FormResult.CreateSuccessResult(_stringLocalizer["savedSuccess"], Url.Action(nameof(List)));
+        return FormResult.CreateErrorResult(result.Errors.First());
+    }
+
+    [HttpGet("Dashboard/Users/{userId}/ToggleUserActivation")]
+    public async Task<IActionResult> ToggleUserActivation(string userId)
+    {
+        var result = await _sender.Send(new ToggleUserActivationQuery(userId));
+
+        if (!result.Succeeded)
+        {
+            _toastNotification.AddErrorToastMessage(result.Errors[0]);
+            throw new Exception();
+        }
         return RedirectToAction(nameof(List));
     }
 }
